@@ -12,7 +12,7 @@ if has("nvim")                    " only works in neovim
   set inccommand=split            " show substitutions incrementally
 endif
 
-set ruler
+set number
 
 " Specify a directory for plugins
 call plug#begin('~/.vim/plugged')

@@ -1,6 +1,6 @@
 packages:
   debian:
     apt:
-    - 'git'
     - 'build-essential'
+    - 'git'
     - 'zip'

@@ -1,0 +1,5 @@
+packages:
+  debian:
+    apt:
+    - 'git'
+    - 'build-essential'

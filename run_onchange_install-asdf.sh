@@ -20,3 +20,6 @@ asdf plugin add neovim
 asdf plugin add bat
 asdf plugin add lsd https://github.com/ossareh/asdf-lsd.git
 asdf plugin add rclone
+asdf plugin add upx
+
+asdf install

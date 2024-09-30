@@ -122,14 +122,21 @@ source $HOME/.asdf/completions/asdf.bash
 source <(chezmoi completion bash)
 alias vim=nvim
 alias vi=nvim
+
+# asdf upgrade function to update all plugins and install latest versions
 function asdf_upgrade() {
-	asdf update
+	# Update asdf
+  asdf update
+  # Update all plugins
 	asdf plugin-update --all
-	for i in $(asdf plugin-list); do
+	# Install latest version of all plugins
+  for i in $(asdf plugin-list); do
 		asdf install $i latest
 		asdf global $i latest
 	done
+  # update chezmoi dotfiles
 	chezmoi add ~/.tool-versions
+  # remove old versions
 	for i in $(asdf plugin-list); do
 		nb=$(asdf list $i | wc -l)
 		if [[ $nb -ne 1 ]]; then

@@ -130,6 +130,14 @@ function asdf_upgrade() {
 		asdf global $i latest
 	done
 	chezmoi add ~/.tool-versions
+	for i in $(asdf plugin-list); do
+		nb=$(asdf list $i | wc -l)
+		if [[ $nb -ne 1 ]]; then
+			version=$(asdf list $i | grep -v \* | head -n 1)
+			echo "uninstalling $i $version"
+			asdf uninstall $i $version
+		fi
+	done
 }
 
 #EOF

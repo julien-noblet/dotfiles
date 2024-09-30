@@ -4,3 +4,4 @@ golang 1.23.1
 lazygit 0.44.0
 chezmoi 2.52.3
 age 1.2.0
+neovim 0.10.1

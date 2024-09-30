@@ -4,4 +4,5 @@ packages:
     - 'build-essential'
     - 'gcc'
     - 'git'
+    - 'git-lfs'
     - 'zip'

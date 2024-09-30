@@ -9,6 +9,7 @@ sudo apt install -y \
 {{ range .packages.debian.apt -}}
 sudo apt install -y {{ . | quote }} 
 {{ end -}}
+sudo apt autoremove -y
 
 {{ end -}}
 {{ end -}}

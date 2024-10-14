@@ -22,5 +22,6 @@ asdf plugin add lsd https://github.com/ossareh/asdf-lsd.git
 asdf plugin add rclone
 asdf plugin add upx
 asdf plugin add shfmt
+asdf plugin add hugo
 
 asdf install

@@ -117,7 +117,7 @@ fi
 
 export EDITOR=nvim
 export PATH="$HOME/bin:$PATH"
-export ASDF_DATA_DIR=/home/julien/.asdf
+export ASDF_DATA_DIR={{ .chezmoi.destDir }}/.asdf
 export PATH="$ASDF_DATA_DIR/shims:$ASDF_DATA_DIR/bin:$PATH"
 source <(asdf completion bash)
 

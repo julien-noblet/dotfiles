@@ -7,7 +7,7 @@ function install_asdf (){
     base_url="https://github.com/asdf-vm/asdf/releases/download/"
     rm -f asdf-v{{ .asdf.version }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz*
     wget "${base_url}v{{ .asdf.version }}/asdf-v{{ .asdf.version }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
-    tar -xvzf asdf-v{{ .asdf.version }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz -C ~/.asdf/bin --strip-components=1
+    tar -xvzf asdf-v{{ .asdf.version }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz -C ~/.asdf/bin
     # clean up
     rm -f asdf-v{{ .asdf.version }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz*
     export ASDF_DATA_DIR={{ .chezmoi.destDir }}/.asdf

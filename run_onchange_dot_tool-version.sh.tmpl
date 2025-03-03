@@ -24,7 +24,7 @@ if [ ! -x ~/.asdf/bin/asdf ] ; then
    install_asdf
 fi
 # if asdf version is not the right one then install asdf
-if [ "$(~/.asdf/bin/asdf --version | cut -d ' ' -f 3)" != "v0.16.4" ]; then
+if [ "$(~/.asdf/bin/asdf --version | cut -d ' ' -f 3)" != "v{{ .asdf.version }}" ]; then
    install_asdf
 fi
 

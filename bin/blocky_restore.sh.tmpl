@@ -1,0 +1,14 @@
+{{ if eq .chezmoi.hostname "blocky" -}}
+#!/bin/bash
+
+## Restore
+# copy from backup server
+rclone copy {{ .backup_blocky.sync.blocky.remote }} /tmp/blocky.tar.zst
+zstd -d /tmp/blocky.tar.zst
+tar -xvf /tmp/blocky.tar -C ~/
+
+# copy books from backup server
+rclone sync {{ .backup_blocky.sync.calibre_books.remote }} {{ .backup_blocky.sync.calibre_books.local }}
+
+
+{{ end -}}

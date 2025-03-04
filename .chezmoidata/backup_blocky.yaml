@@ -1,0 +1,24 @@
+backup_blocky:
+  backup:
+    - blocky/config.yml
+    - blocky/docker-compose.yml
+    - blocky/prometheus.yml
+    - blocky/traefik/calibre-web.yml
+    - blocky/traefik/filebrowser.yaml
+    - blocky/traefik/grafana.yaml
+    - blocky/calibre/config/.key
+    - blocky/calibre/config/app.db
+    - blocky/calibre/config/client_secrets.json
+    - blocky/calibre/config/gdrive.db
+    - blocky/calibre/kepubify-linux-arm64
+    - blocky/calibre/covergen-linux-arm64
+    - blocky/lists_updaters
+    - blocky/backups
+
+  sync:
+    calibre_books:
+      local: blocky/calibre/books/
+      remote: OneDrive:/Books/Calibre/
+    blocky:
+      local: blocky.tar.zstd
+      remote: OneDrive:/blocky.tar.zstd

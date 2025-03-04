@@ -1,7 +1,7 @@
 {{ if eq .chezmoi.hostname "blocky" -}}
 #!/bin/bash
-
-tar -cvf /tmp/blocky.tar {{ range  .backup_blocky.backup -}}~/{{ . }} {{ end }}
+pushd ~/
+tar -cvf /tmp/blocky.tar {{ range  .backup_blocky.backup -}}{{ . }} {{ end }}
 zstd -T0 -19 /tmp/blocky.tar
 
 # copy to backup server
@@ -12,4 +12,5 @@ rclone sync -P --fast-list ~/{{ .backup_blocky.sync.calibre_books.local }} {{ .b
 # clean up
 rm -f /tmp/blocky.tar.zst
 
+popd
 {{ end -}}

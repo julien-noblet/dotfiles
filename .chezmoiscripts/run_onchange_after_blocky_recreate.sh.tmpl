@@ -8,7 +8,7 @@ bash ~/bin/blocky_restore.sh
 # run blocky
 cd ~/blocky
 sudo echo "nameserver 1.1.1.1" | sudo tee /etc/resolv.conf
-docker-compose up -d
+docker compose up -d
 
 sudo reboot
 {{ end -}}

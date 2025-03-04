@@ -3,7 +3,7 @@
 
 ## Restore
 # copy from backup server
-rclone copy -P {{ .backup_blocky.sync.blocky.remote }} /tmp/blocky.tar.zst
+rclone copy -P {{ .backup_blocky.sync.blocky.remote }} /tmp/
 zstd -d /tmp/blocky.tar.zst
 tar -xvf /tmp/blocky.tar -C ~/
 

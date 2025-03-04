@@ -12,4 +12,8 @@ sudo apt install -y {{ . | quote }}
 sudo apt autoremove -y
 
 {{ end -}}
+
+# set git to rebase by default
+git config --global pull.rebase true
+
 {{ end -}}

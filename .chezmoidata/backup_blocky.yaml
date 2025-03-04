@@ -3,7 +3,7 @@ backup_blocky:
     - blocky/config.yml
     - blocky/docker-compose.yml
     - blocky/prometheus.yml
-    - blocky/traefik/calibre-web.yml
+    - blocky/traefik/calibre-web.yaml
     - blocky/traefik/filebrowser.yaml
     - blocky/traefik/grafana.yaml
     - blocky/calibre/config/.key

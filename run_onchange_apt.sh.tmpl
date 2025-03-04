@@ -1,7 +1,7 @@
 {{ if eq .chezmoi.os "linux" -}}
 #!/bin/bash
 
-{{ if eq .chezmoi.osRelease.idLike "debian" -}}
+{{ if (or (eq .chezmoi.osRelease.id "debian") (eq .chezmoi.osRelease.id "ubuntu") ) -}}
 sudo apt update
 sudo apt upgrade -y
 

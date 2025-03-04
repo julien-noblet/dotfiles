@@ -7,7 +7,7 @@ zstd -T0 -19 /tmp/blocky.tar
 # copy to backup server
 rclone copy -P /tmp/blocky.tar.zst {{ .backup_blocky.sync.blocky.remote }}
 # copy books to backup server
-rclone sync -P ~/{{ .backup_blocky.sync.calibre_books.local }} {{ .backup_blocky.sync.calibre_books.remote }}
+rclone sync -P --fast-list ~/{{ .backup_blocky.sync.calibre_books.local }} {{ .backup_blocky.sync.calibre_books.remote }}
 
 # clean up
 rm -f /tmp/blocky.tar.zst

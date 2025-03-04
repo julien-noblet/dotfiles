@@ -1,4 +1,4 @@
-{{ if .chezmoi.hostname "blocky" -}}
+{{ if eq .chezmoi.hostname "blocky" -}}
 #!/bin/bash
 
 sudo echo "nameserver 1.1.1.1" | sudo tee /etc/resolv.conf

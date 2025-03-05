@@ -10,8 +10,6 @@ backup_blocky:
     - blocky/calibre/config/app.db
     - blocky/calibre/config/client_secrets.json
     - blocky/calibre/config/gdrive.db
-    - blocky/calibre/kepubify-linux-arm64
-    - blocky/calibre/covergen-linux-arm64
     - blocky/lists_updaters
     - blocky/backups
 

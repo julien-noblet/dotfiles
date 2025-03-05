@@ -27,7 +27,7 @@ asdf:
       version: 1.1.5
     - name: neovim
       version: 0.10.4
-      plugin_url:
+      plugin_url: https://github.com/julien-noblet/asdf-neovim.git
     - name: nodejs
       version: 23.9.0
       plugin_url:

@@ -6,3 +6,4 @@ packages:
     - 'git'
     - 'git-lfs'
     - 'zip'
+    - 'zstd'

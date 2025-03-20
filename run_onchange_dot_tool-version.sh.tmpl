@@ -10,7 +10,7 @@ function install_asdf (){
     tar -xvzf asdf-v{{ .asdf.version }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz -C ~/.asdf/bin
     # clean up
     rm -f asdf-v{{ .asdf.version }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz*
-    export ASDF_DATA_DIR={{ .chezmoi.destDir }}/.asdf
+    export ASDF_DATA_DIR={{ .chezmoi.config.destDir }}/.asdf
     export PATH="$ASDF_DATA_DIR/shims:$ASDF_DATA_DIR/bin:$PATH"
 }
 

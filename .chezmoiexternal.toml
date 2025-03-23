@@ -1,0 +1,12 @@
+{{ if eq .chezmoi.hostname "victus" -}}
+# add WIP repos
+
+["projects/download-geofabrik"]
+    type = "git-repo"
+    url = "https://github.com/julien-noblet/download-geofabrik.git"
+    refreshPeriod = "24h"
+["projects/cad-killer"]
+    type = "git-repo"
+    url = "https://github.com/julien-noblet/cad-killer.git"
+    refreshPeriod = "24h"
+{{ end }}

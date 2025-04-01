@@ -9,4 +9,8 @@
     type = "git-repo"
     url = "https://github.com/julien-noblet/cad-killer.git"
     refreshPeriod = "24h"
+["projects/julien-noblet.github.io"]
+    type = "git-repo"
+    url = "git@github.com:julien-noblet/julien-noblet.github.io.git"
+    refreshPeriod = "2h"
 {{ end }}

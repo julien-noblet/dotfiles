@@ -17,7 +17,7 @@ asdf:
       version: 0.145.0
       plugin_url:
     - name: golang
-      version: 1.24.1
+      version: 1.24.2
       plugin_url:
     - name: lazygit
       version: 0.48.0

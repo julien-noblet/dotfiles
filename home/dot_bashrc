@@ -151,6 +151,5 @@ function asdf_upgrade() {
   done
   update-nvim-stable
 }
-alias update-nvim-stable='asdf uninstall neovim stable && asdf install neovim stable'
 
 #EOF

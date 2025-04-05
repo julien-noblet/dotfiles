@@ -1,0 +1,24 @@
+{{ if eq .chezmoi.hostname "victus" -}}
+# add WIP repos
+
+"projects/download-geofabrik":
+    type: git-repo
+    url: "git@github.com:julien-noblet/download-geofabrik.git"
+    refreshPeriod: "24h"
+"projects/cad-killer":
+    type: git-repo
+    url: "git@github.com:julien-noblet/cad-killer.git"
+    refreshPeriod: "24h"
+"projects/julien-noblet.github.io":
+    type: git-repo
+    url: "git@github.com:julien-noblet/julien-noblet.github.io.git"
+    refreshPeriod: "2h"
+{{ end }}
+
+# Install ender3pro
+{{ if eq .chezmoi.hostname "ender3pro" }}
+"kiauh":
+    type: git-repo
+    url: https://github.com/th33xitus/kiauh.git
+    refreshPeriod: "24h"
+{{ end }}

@@ -1,7 +1,7 @@
 
 # WSL Interop (https://github.com/mikebattista/PowerShell-WSL-Interop)
 # Installation: Install-Module WslInterop -Force
-Import-WslCommand "cat","chmod", "cp", "echo", "find", "grep", "head", "less", "ls","man", "mv", "rm", "sed", "tail", "touch", "tree", "which"
+#Import-WslCommand "cat","chmod", "cp", "echo", "find", "grep", "head", "less", "ls","man", "mv", "rm", "sed", "tail", "touch", "tree", "which"
 
 # WinGet (https://github.com/microsoft/winget-cli)
 Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {

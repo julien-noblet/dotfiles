@@ -93,7 +93,8 @@ function WslCompact {
                     Write-Host " NOTE: You can safely cancel at any time by pressing Ctrl-C`n " -NoNewLine
                     remove-item "$tmp_folder/*" -Recurse -Force
                     wsl --shutdown
-                    cmd /c "wsl --export ""$wsl_distro"" - | wsl --import wslcompact ""$tmp_folder"" -"
+                    cmd /c "wsl --export ""$wsl_distro"" ""$tmp_folder\$wsl_distro"""
+                    cmd /c "wsl --import wslcompact ""$tmp_folder"" ""$tmp_folder\$wsl_distro"""
                     wsl --shutdown
                     if (Test-Path "$tmp_folder/ext4.vhdx") {
                         Move-Item "$tmp_folder/ext4.vhdx" "$tmp_folder/$wsl_distro.vhdx" -Force

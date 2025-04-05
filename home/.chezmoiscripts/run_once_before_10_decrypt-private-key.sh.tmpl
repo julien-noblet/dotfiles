@@ -1,3 +1,5 @@
+{{- if eq .chezmoi.config.os "linux" -}}
+{{- if eq .chezmoi.config.shell "bash" -}}
 #!/bin/sh
 
 if [ ! -f "{{ .chezmoi.config.destDir }}/.config/chezmoi/key.txt" ]; then
@@ -5,3 +7,13 @@ if [ ! -f "{{ .chezmoi.config.destDir }}/.config/chezmoi/key.txt" ]; then
     chezmoi age decrypt --output "{{ .chezmoi.config.destDir }}/.config/chezmoi/key.txt" --passphrase "{{ .chezmoi.sourceDir }}/key.txt.age"
     chmod 600 "{{ .chezmoi.config.destDir }}/.config/chezmoi/key.txt"
 fi
+{{- end -}}
+{{- end -}}
+{{- if eq .chezmoi.config.os "windows" -}}
+@echo off
+if not exist "{{- .chezmoi.config.destDir -}}\.config\chezmoi\key.txt" (
+    mkdir "{{- .chezmoi.config.destDir -}}\.config\chezmoi"
+    chezmoi age decrypt --output "{{- .chezmoi.config.destDir -}}\.config\chezmoi\key.txt" --passphrase "%~dp0key.txt.age"
+    icacls "{{- .chezmoi.config.destDir -}}\.config\chezmoi\key.txt" /inheritance:r /grant:r "{{- .chezmoi.username -}}":(R,W)
+)
+{{- end -}}

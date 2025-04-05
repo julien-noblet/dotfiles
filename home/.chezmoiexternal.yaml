@@ -1,3 +1,4 @@
+{{ if eq .chezmoi.os "linux" -}}
 {{ if eq .chezmoi.hostname "victus" -}}
 # add WIP repos
 
@@ -23,3 +24,4 @@
     refreshPeriod: "24h"
 
 {{ end }}
+{{ end -}}

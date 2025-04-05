@@ -1,0 +1,31 @@
+{{- if eq .chezmoi.os "windows" -}}
+#This script creates symlinks for the "Documents" powershell folders to ones not located in OneDrive, to avoid modules constantly syncing to onedrive.
+
+$documents = [Environment]::GetFolderPath('MyDocuments')
+
+$powershellPath = Join-Path $documents 'PowerShell'
+$winpowershellPath = Join-Path $documents 'WindowsPowerShell'
+if (Test-Path $powershellPath) {
+  $isSymbolicLink = (Get-Item $powershellPath).LinkType -eq 'SymbolicLink'
+  if (-not $isSymbolicLink) {
+    Write-Warning "Existing PowerShell Path is not a symbolic link.  Deleting it, please confirm."
+    Remove-Item $powershellPath -Confirm:$true
+    New-Item -ItemType SymbolicLink -Path "$documents\PowerShell" -Target "$HOME/.config/powershell"
+  }
+} else {
+  New-Item -ItemType SymbolicLink -Path "$documents\PowerShell" -Target "$HOME/.config/powershell"
+}
+if (Test-Path $winPowershellPath) {
+  $isSymbolicLink = (Get-Item $winpowershellPath).LinkType -eq 'SymbolicLink'
+  if (-not $isSymbolicLink) {
+    Write-Warning "Existing WindowsPowerShell Path is not a symbolic link.  Deleting it, please confirm"
+    Remove-Item $winPowerSHellPath -Confirm:$true
+    New-Item -ItemType SymbolicLink -Path "$documents\WindowsPowerShell" -Target "$HOME/.config/powershell"
+  }
+} else {
+  New-Item -ItemType SymbolicLink -Path "$documents\WindowsPowerShell" -Target "$HOME/.config/powershell"
+}
+
+
+
+{{ end -}}

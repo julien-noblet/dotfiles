@@ -1,3 +1,4 @@
+{{- if eq .chezmoi.os "linux" -}}
 #!/bin/bash
 
 # function install_asdf
@@ -46,4 +47,5 @@ echo "installing {{.name}} {{.version}}"
 if [ -z "$(~/.asdf/bin/asdf list {{ .name }} | grep {{ .version }})" ]; then
     ~/.asdf/bin/asdf install {{ .name }} {{ .version }}
 fi
+{{ end -}}
 {{ end -}}

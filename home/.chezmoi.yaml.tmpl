@@ -1,0 +1,23 @@
+encryption: "age"
+age:
+  identity: "~/.config/chezmoi/key.txt"
+  recipient: "age1l53u999rh3rlajznd422rf2mc05u8y5vk8wa34g94700putccp4q79vyzm"
+
+{{ $wsl := or (env "WSL_DISTRO_NAME") (env "IS_WSL") | not | not }}
+
+{{- if eq $wsl true -}}
+verbose: true
+{{- else -}}
+verbose: false
+{{ end }}
+
+
+# https://github.com/twpayne/chezmoi/issues/3257
+pager: ""
+
+
+{{/* Here we "export" the variables, so we can access them outside this file */ -}}
+data:
+  is_wsl: {{ $wsl }}
+
+  uname_arch: "{{ output "uname" "-m" | trim }}"

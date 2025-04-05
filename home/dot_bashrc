@@ -126,7 +126,6 @@ alias chezmoi-up='chezmoi git pull && chezmoi apply'
 source <(chezmoi completion bash)
 alias vim=nvim
 alias vi=nvim
-alias gethugo="CGO_ENABLED=1 go install -tags extended,withdeploy github.com/gohugoio/hugo@latest"
 
 # asdf upgrade function to update all plugins and install latest versions
 function asdf_upgrade() {

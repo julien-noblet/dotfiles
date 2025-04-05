@@ -7,11 +7,3 @@ if [ ! -f "{{ .chezmoi.config.destDir }}/.config/chezmoi/key.txt" ]; then
     chmod 600 "{{ .chezmoi.config.destDir }}/.config/chezmoi/key.txt"
 fi
 {{- end -}}
-{{- if eq .chezmoi.os "windows" -}}
-@echo off
-if not exist "{{- .chezmoi.config.destDir -}}\.config\chezmoi\key.txt" (
-    mkdir "{{- .chezmoi.config.destDir -}}\.config\chezmoi"
-    chezmoi age decrypt --output "{{- .chezmoi.config.destDir -}}\.config\chezmoi\key.txt" --passphrase "%~dp0key.txt.age"
-    icacls "{{- .chezmoi.config.destDir -}}\.config\chezmoi\key.txt" /inheritance:r /grant:r "{{- .chezmoi.username -}}":(R,W)
-)
-{{- end -}}

@@ -1,0 +1,11 @@
+winget:
+  - "Microsoft.WindowsTerminal"
+  - "Microsoft.VisualStudioCode"
+  - "Microsoft.PowerToys"
+  - "7zip.7zip"
+  - "VideoLAN.VLC"
+  - "Rclone.Rclone"
+  - "Meta.Zstandard"
+  - "SumatraPDF.SumatraPDF"
+  - "twpayne.chezmoi"
+  - "starship.starship"

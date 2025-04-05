@@ -26,6 +26,14 @@ if (Test-Path $winPowershellPath) {
   New-Item -ItemType SymbolicLink -Path "$documents\WindowsPowerShell" -Target "$HOME/.config/powershell"
 }
 
+# List of tools to install
+{{ range  .winget -}}
+# Check if the tool is already installed
+$tool = "{{ . }}"
+Write-Host "Checking if $tool is installed..."
+$installed = winget list | Select-String -Pattern $tool
 
 
+
+{{ end -}}
 {{ end -}}

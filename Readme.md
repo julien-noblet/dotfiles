@@ -15,7 +15,7 @@ To set up your environment using these dotfiles, follow the steps below:
 
 2. **Clone the Repository**:
     ```sh
-    chezmoi init --apply https://github.com/julien-noblet/dotfiles.git
+    chezmoi init --apply julien-noblet
     ```
 
 

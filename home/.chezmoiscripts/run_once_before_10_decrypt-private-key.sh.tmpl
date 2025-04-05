@@ -1,5 +1,4 @@
-{{- if eq .chezmoi.config.os "linux" -}}
-{{- if eq .chezmoi.config.shell "bash" -}}
+{{- if eq .chezmoi.os "linux" -}}
 #!/bin/sh
 
 if [ ! -f "{{ .chezmoi.config.destDir }}/.config/chezmoi/key.txt" ]; then
@@ -8,8 +7,7 @@ if [ ! -f "{{ .chezmoi.config.destDir }}/.config/chezmoi/key.txt" ]; then
     chmod 600 "{{ .chezmoi.config.destDir }}/.config/chezmoi/key.txt"
 fi
 {{- end -}}
-{{- end -}}
-{{- if eq .chezmoi.config.os "windows" -}}
+{{- if eq .chezmoi.os "windows" -}}
 @echo off
 if not exist "{{- .chezmoi.config.destDir -}}\.config\chezmoi\key.txt" (
     mkdir "{{- .chezmoi.config.destDir -}}\.config\chezmoi"

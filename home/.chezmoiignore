@@ -1,4 +1,5 @@
 key.txt.age
 {{- if not (or (eq .chezmoi.hostname "ender3pro") .is_wsl) -}}
-printer_data/
+printer_data/**
+printer_data
 {{- end -}}

@@ -12,7 +12,17 @@ charging_symbol = "⚡"           # The symbol shown when the battery is chargin
 discharging_symbol = "🔋"       # The symbol shown when the battery is discharging.
 
 [[battery.display]]
+threshold = 100                  # The upper bound for the display option.
+style = "bold green"           # The style used if the display option is in use.
+
+[[battery.display]]
+threshold = 90                  # The upper bound for the display option.
+discharging_symbol = '💦 '
+style = "bold green"           # The style used if the display option is in use.
+
+[[battery.display]]
 threshold = 30                  # The upper bound for the display option.
+discharging_symbol = '💦 '
 style = "bold yellow"           # The style used if the display option is in use.
 
 [[battery.display]]

@@ -6,6 +6,7 @@
 #
 # See https://starship.rs/
 
+{{ if eq .chezmoi.hostname "victus" }} 
 [battery]
 full_symbol = "🔌"              # The symbol shown when the battery is full.
 charging_symbol = "⚡"           # The symbol shown when the battery is charging.
@@ -28,6 +29,7 @@ style = "bold yellow"           # The style used if the display option is in use
 [[battery.display]]
 threshold = 10                  # The upper bound for the display option.
 style = "bold red"              # The style used if the display option is in use.
+{{ end }}
 
 [character]
 #use_symbol_for_status = true    # Indicate error status by changing the symbol.

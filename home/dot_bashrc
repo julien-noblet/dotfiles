@@ -82,30 +82,90 @@ esac
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
-if [ -f ~/.bash_exports ]; then
-	# shellcheck source=./dot_bash_exports.tmpl
-	. ~/.bash_exports
+if command -v nvim &>/dev/null; then
+	# Use Neovim as the default editor
+	export EDITOR=nvim
+	export VISUAL=nvim
+
 fi
 
-if [ -f ~/.bash_aliases ]; then
-	# shellcheck source=./dot_bash_aliases.tmpl
-	. ~/.bash_aliases
+# asdf
+export PATH="$HOME/bin:$PATH"
+export ASDF_DATA_DIR=$HOME/.asdf
+export PATH="$ASDF_DATA_DIR/shims:$ASDF_DATA_DIR/bin:$PATH"
+
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+	test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+	alias ls='ls --color=auto'
+	#alias dir='dir --color=auto'
+	#alias vdir='vdir --color=auto'
+
+	alias grep='grep --color=auto'
+	alias fgrep='fgrep --color=auto'
+	alias egrep='egrep --color=auto'
 fi
 
-if [ -f ~/.bash_functions ]; then
-	# shellcheck source=./dot_bash_functions.tmpl
-	. ~/.bash_functions
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+if command -v nvim &>/dev/null; then
+	alias vim=nvim
+	alias vi=nvim
 fi
 
-if [ -f ~/.bash_completion ]; then
-	# shellcheck source=./dot_bash_completion.tmpl
-	# shellcheck disable=SC1094
-	. ~/.bash_completion
-fi
+alias cup='chezmoi update'
 
-if [ -f ~/.bash_prompt ]; then
-	# shellcheck source=./dot_bash_prompt.tmpl
-	. ~/.bash_prompt
+
+# asdf upgrade function to update all plugins and install latest versions
+function asdf_upgrade() {
+	# Update asdf
+	#asdf update
+	# Update all plugins
+	asdf plugin update --all
+	# Install latest version of all plugins
+	for i in $(asdf plugin list); do
+		asdf install "$i" latest
+		asdf reshim "$i"
+	done
+	# update chezmoi dotfiles
+	chezmoi add ~/.tool-versions
+	# remove old versions
+	for i in $(asdf plugin list); do
+		nb=$(asdf list "$i" | wc -l)
+		if [[ $nb -ne 1 ]]; then
+			version=$(asdf list "$i" | grep -v '\*' | head -n 1)
+			echo "uninstalling \"$i\" \"$version\""
+			asdf uninstall "$i" "$version"
+		fi
+	done
+}
+
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+	if [ -f /usr/share/bash-completion/bash_completion ]; then
+		. /usr/share/bash-completion/bash_completion
+	elif [ -f /etc/bash_completion ]; then
+		. /etc/bash_completion
+	fi
+fi
+source <(asdf completion bash)
+
+source <(chezmoi completion bash)
+
+# launch starship
+if command -v starship; then
+	eval "$(starship init bash)"
 fi
 
 #EOF

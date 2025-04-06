@@ -1,7 +1,7 @@
 {{ if eq .chezmoi.hostname "blocky" -}}
 #!/bin/bash
 pushd ~/
-tar -cvf /tmp/blocky.tar {{ range  .backup_blocky.backup -}}{{ . }} {{ end }}
+tar -cvf /tmp/blocky.tar {{ range .backup_blocky.backup -}}{{ . }} {{ end }}
 zstd -T0 -9 /tmp/blocky.tar
 
 # copy to backup server

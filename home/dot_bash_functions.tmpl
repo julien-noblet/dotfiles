@@ -1,0 +1,25 @@
+# shellcheck shell=bash
+
+# asdf upgrade function to update all plugins and install latest versions
+function asdf_upgrade() {
+	# Update asdf
+	#asdf update
+	# Update all plugins
+	asdf plugin update --all
+	# Install latest version of all plugins
+	for i in $(asdf plugin list); do
+		asdf install "$i" latest
+		asdf reshim "$i"
+	done
+	# update chezmoi dotfiles
+	chezmoi add ~/.tool-versions
+	# remove old versions
+	for i in $(asdf plugin list); do
+		nb=$(asdf list "$i" | wc -l)
+		if [[ $nb -ne 1 ]]; then
+			version=$(asdf list "$i" | grep -v '\*' | head -n 1)
+			echo "uninstalling \"$i\" \"$version\""
+			asdf uninstall "$i" "$version"
+		fi
+	done
+}

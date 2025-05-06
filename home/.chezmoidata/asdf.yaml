@@ -11,28 +11,28 @@ asdf:
       version: 2.62.2
       plugin_url:
     - name: github-cli
-      version: 2.71.2
+      version: 2.72.0
       plugin_url:
     - name: golang
       version: 1.24.2
       plugin_url:
     - name: hugo
-      version: 0.145.0
+      version: 0.147.1
       plugin_url:
     - name: lazygit
-      version: 0.48.0
+      version: 0.50.0
       plugin_url:
     - name: lsd
       plugin_url: https://github.com/ossareh/asdf-lsd.git
       version: 1.1.5
     - name: neovim
-      version: 0.11.0
+      version: 0.11.1
       plugin_url:
     - name: nodejs
       version: 23.10.0
       plugin_url:
     - name: rclone
-      version: 1.69.1
+      version: 1.69.2
       plugin_url:
     - name: shfmt
       version: 3.11.0
@@ -41,11 +41,11 @@ asdf:
       version: 5.0.0
       plugin_url:
     - name: yq
-      version: 4.45.1
+      version: 4.45.2
       plugin_url:
     - name: gum
       version: 0.16.0
       plugin_url:
     - name: starship
-      version: 1.22.1
+      version: 1.23.0
       plugin_url:

@@ -8,16 +8,16 @@ asdf:
       version: 0.25.0
       plugin_url:
     - name: chezmoi
-      version: 2.62.2
+      version: 2.62.4
       plugin_url:
     - name: github-cli
       version: 2.72.0
       plugin_url:
     - name: golang
-      version: 1.24.2
+      version: 1.24.3
       plugin_url:
     - name: hugo
-      version: 0.147.1
+      version: 0.147.3
       plugin_url:
     - name: lazygit
       version: 0.50.0

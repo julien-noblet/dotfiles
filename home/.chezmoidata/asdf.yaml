@@ -1,5 +1,5 @@
 asdf:
-  version: 0.16.7
+  version: 0.18.0
   tools:
     - name: age
       version: 1.2.1
@@ -8,43 +8,43 @@ asdf:
       version: 0.25.0
       plugin_url:
     - name: chezmoi
-      version: 2.62.4
+      version: 2.62.7
       plugin_url:
     - name: github-cli
-      version: 2.72.0
+      version: 2.74.2
       plugin_url:
     - name: golang
-      version: 1.24.3
+      version: 1.24.4
       plugin_url:
     - name: hugo
-      version: 0.147.3
+      version: 0.147.9
       plugin_url:
     - name: lazygit
-      version: 0.50.0
+      version: 0.52.0
       plugin_url:
     - name: lsd
       plugin_url: https://github.com/ossareh/asdf-lsd.git
       version: 1.1.5
     - name: neovim
-      version: 0.11.1
+      version: 0.11.2
       plugin_url:
     - name: nodejs
       version: 23.10.0
       plugin_url:
     - name: rclone
-      version: 1.69.2
+      version: 1.70.2
       plugin_url:
     - name: shfmt
       version: 3.11.0
       plugin_url:
     - name: upx
-      version: 5.0.0
+      version: 5.0.1
       plugin_url:
     - name: yq
-      version: 4.45.2
+      version: 4.45.4
       plugin_url:
     - name: gum
-      version: 0.16.0
+      version: 0.16.2
       plugin_url:
     - name: starship
       version: 1.23.0

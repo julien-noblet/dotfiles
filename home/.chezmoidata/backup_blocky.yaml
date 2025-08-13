@@ -3,15 +3,18 @@ backup_blocky:
     - blocky/config.yml
     - blocky/docker-compose.yml
     - blocky/prometheus.yml
-    - blocky/traefik/calibre-web.yaml
-    - blocky/traefik/filebrowser.yaml
-    - blocky/traefik/grafana.yaml
+    #- blocky/traefik/calibre-web.yaml
+    #- blocky/traefik/filebrowser.yaml
+    #- blocky/traefik/grafana.yaml
     - blocky/calibre/config/.key
     - blocky/calibre/config/app.db
     - blocky/calibre/config/client_secrets.json
     - blocky/calibre/config/gdrive.db
     - blocky/lists_updaters
     - blocky/backups
+    - blocky/docker-compose
+    - blocky/kuma
+
 
   sync:
     calibre_books:

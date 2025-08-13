@@ -20,3 +20,6 @@ backup_blocky:
     blocky:
       local: blocky.tar.zstd
       remote: OneDrive:/blocky.tar.zstd
+    manyfolds:
+      local: blocky/manyfold/manyfolds/
+      remote: OneDrive:/3D/manifolds/

@@ -9,5 +9,7 @@ tar -xvf /tmp/blocky.tar -C ~/
 
 # copy books from backup server
 rclone sync -P --fast-list {{ .backup_blocky.sync.calibre_books.remote }} ~/{{ .backup_blocky.sync.calibre_books.local }}
+# copy manyfolds from backup server
+rclone sync -P --fast-list {{ .backup_blocky.sync.manyfolds.remote }} ~/{{ .backup_blocky.sync.manyfolds.local }}
 
 {{ end -}}

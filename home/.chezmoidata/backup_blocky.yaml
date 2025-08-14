@@ -15,7 +15,6 @@ backup_blocky:
     - blocky/docker-compose
     - blocky/kuma
 
-
   sync:
     calibre_books:
       local: blocky/calibre/books/

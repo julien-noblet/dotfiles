@@ -14,6 +14,7 @@ backup_blocky:
     - blocky/backups
     - blocky/docker-compose
     - blocky/kuma
+    - blocky/readeck
 
   sync:
     calibre_books:

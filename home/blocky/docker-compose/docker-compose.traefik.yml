@@ -11,6 +11,8 @@ services:
     environment:
       TZ: Europe/Paris
       TRAEFIK_DASHBOARD_CREDENTIALS: ${TRAEFIK_DASHBOARD_CREDENTIALS}
+      MAIN_DOMAIN: ${MAIN_DOMAIN}
+      EMAIL: ${EMAIL}
     security_opt:
       - no-new-privileges:true
     ports:
@@ -19,7 +21,7 @@ services:
       # See https://doc.traefik.io/traefik/https/acme/#tlschallenge for more information.
       - 80:80 # web
       - 443:443 # websecure
-      - 8080:8080 # traefik
+      # - 8080:8080 # traefik
       - 49181:49181 # kuma
       - 49190:49190 # wallabag
     networks:
@@ -35,23 +37,23 @@ services:
       # - --api.insecure=true
       - --entryPoints.web.address=:80
       - --providers.docker=true
-      #- --providers.docker.network=blocky_network
+      # - --providers.docker.network=blocky_network
       # Do not expose containers unless explicitly told so
       - --providers.docker.exposedbydefault=false
-      #- --providers.docker.allowEmptyServices=true
+      # - --providers.docker.allowEmptyServices=true
       - --entryPoints.websecure.address=:443
-      #- --entryPoints.loki.address=:3100
+      # - --entryPoints.loki.address=:3100
       - --entryPoints.kuma.address=:49181
       - --ping=true
-      #- --entryPoints.webwallabag.address=:49190
+      # - --entryPoints.webwallabag.address=:49190
       - --metrics.addinternals
       - --metrics.prometheus.buckets=0.1,0.3,1.2,5.0
       - --accesslog=true
-      #- --accesslog.format=json
+      # - --accesslog.format=json
       - --providers.file.directory=/dynamic
       - --providers.file.watch=true
-      #- --experimental.plugins.sablier.modulename=github.com/sablierapp/sablier
-      #- --experimental.plugins.sablier.version=v1.8.1
+      # - --experimental.plugins.sablier.modulename=github.com/sablierapp/sablier
+      # - --experimental.plugins.sablier.version=v1.8.1
       - --certificatesresolvers.myresolver.acme.httpchallenge=true
       - --certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web
       - --certificatesresolvers.myresolver.acme.caServer=https://acme-v02.api.letsencrypt.org/directory
@@ -73,7 +75,7 @@ services:
       traefik.enable: true
       traefik.http.routers.traefik.entryPoints: http
       traefik.http.routers.traefik.rule: Host(`${MAIN_DOMAIN}`)
-      traefik.http.middlewares.traefik-auth.basicauth.users: admin:password
+      traefik.http.middlewares.traefik-auth.basicauth.users: ${TRAEFIK_DASHBOARD_CREDENTIALS}
       traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme: https
       traefik.http.middlewares.sslheaders.customrequestheaders.X-Forwarded-Proto: https
       traefik.http.routers.traefik.middlewares: traefik-https-redirect

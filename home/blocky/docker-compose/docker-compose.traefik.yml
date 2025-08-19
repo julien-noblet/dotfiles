@@ -30,6 +30,8 @@ services:
     command:
       - --log.level=DEBUG
       - --log.format=json
+      - --api=true
+      - --api.basePath=/traefik
       # - --api.insecure=true
       - --entryPoints.web.address=:80
       - --providers.docker=true
@@ -77,8 +79,7 @@ services:
       traefik.http.routers.traefik.middlewares: traefik-https-redirect
       traefik.http.routers.traefik-secure.entryPoints: websecure
       traefik.http.routers.traefik-secure.rule: Host(`${MAIN_DOMAIN}`) && PathPrefix(`/traefik`)
-      traefik.http.middlewares.strip-traefik.stripprefix.prefixes: /traefik
-      traefik.http.routers.traefik-secure.middlewares: traefik-auth, strip-traefik
+      traefik.http.routers.traefik-secure.middlewares: traefik-auth
       traefik.http.routers.traefik-secure.tls: true
       traefik.http.routers.traefik-secure.tls.certresolver: myresolver
       traefik.http.routers.traefik-secure.tls.domains[0].main: ${MAIN_DOMAIN}

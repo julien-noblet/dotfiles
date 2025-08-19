@@ -1,0 +1,29 @@
+name: autobackup
+
+services:
+  autobackup:
+    image: ghcr.io/realorangeone/db-auto-backup:latest
+    container_name: autobackup
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - databases_backups:/var/backups
+    environment:
+      TZ: Europe/Paris
+      INCLUDE_LOGS: true
+      # SCHEDULE: "" 
+      SCHEDULE: 0 5 * * *
+      CLEAN: true
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50' # Limit CPU usage
+          memory: 2G   # Limit memory usage
+
+volumes:
+  databases_backups:
+    driver: local
+    driver_opts:
+      type: none
+      device: ../backups
+      o: bind

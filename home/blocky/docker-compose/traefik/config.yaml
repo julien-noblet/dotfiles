@@ -1,0 +1,24 @@
+http:
+  middlewares:
+    # Default security headers
+    default-security-headers:
+      header:
+        browserXssFilter: true                            # Enables browser XSS filter to help prevent cross-site scripting attacks
+        contentTypeNoSniff: true                          # Prevents browsers from MIME-sniffing a response away from the declared content-type
+        forceSTSHeader: true                              # Forces the Strict-Transport-Security (HSTS) header to be sent
+        frameDeny: true                                   # Prevents the site from being displayed in an iframe (protects against clickjacking)
+        referrerPolicy: "strict-origin-when-cross-origin" # Controls how much referrer information is included with requests
+        stsIncludeSubdomains: true                        # Applies HSTS policy to all subdomains
+        stsPreload: true                                  # Allows domain to be included in browser HSTS preload list
+        stsSeconds: 3153600                               # Sets HSTS max-age to 1 year (in seconds)
+        
+        # Defines Content Security Policy to restrict sources
+        contentSecurityPolicy: "default-src 'self'; script-src 'self'; object-src 'none';" 
+        customRequestHeaders:
+          X-Forwarded-Proto: https # Adds X-Forwarded-Proto header to indicate HTTPS usage
+
+    # Redirects HTTP to HTTPS
+    https-redirectscheme:
+      redirectScheme:
+        scheme: https   # Redirects HTTP to HTTPS
+        permanent: true # Makes the redirect permanent

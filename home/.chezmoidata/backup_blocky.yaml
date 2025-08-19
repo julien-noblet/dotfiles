@@ -10,7 +10,6 @@ backup_blocky:
     - blocky/calibre/config/app.db
     - blocky/calibre/config/client_secrets.json
     - blocky/calibre/config/gdrive.db
-    - blocky/lists_updaters
     - blocky/backups
     - blocky/docker-compose
     - blocky/kuma

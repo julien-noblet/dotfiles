@@ -9,6 +9,8 @@ services:
         condition: service_healthy
         restart: true
     restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
     volumes:
       - ./lists-download/sources:/sources/sources:ro # Source lists
       - ./lists-download/watch:/web/watch:ro         # Watch lists

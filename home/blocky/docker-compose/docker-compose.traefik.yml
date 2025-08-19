@@ -21,7 +21,7 @@ services:
       # See https://doc.traefik.io/traefik/https/acme/#tlschallenge for more information.
       - 80:80 # web
       - 443:443 # websecure
-      # - 8080:8080 # traefik
+      #- 8080:8080 # traefik
       - 49181:49181 # kuma
       - 49190:49190 # wallabag
     networks:
@@ -32,9 +32,8 @@ services:
     command:
       - --log.level=DEBUG
       - --log.format=json
-      - --api=true
       - --api.basePath=/traefik
-      # - --api.insecure=true
+      #- --api.insecure=true
       - --entryPoints.web.address=:80
       - --providers.docker=true
       # - --providers.docker.network=blocky_network
@@ -73,13 +72,13 @@ services:
     dns: 1.1.1.1
     labels:
       traefik.enable: true
-      traefik.http.routers.traefik.entryPoints: http
-      traefik.http.routers.traefik.rule: Host(`${MAIN_DOMAIN}`)
-      traefik.http.middlewares.traefik-auth.basicauth.users: ${TRAEFIK_DASHBOARD_CREDENTIALS}
+      traefik.http.routers.traefik.entryPoints: web
+      traefik.http.routers.traefik.rule: Host(`${MAIN_DOMAIN}`) && PathPrefix(`/traefik`)
       traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme: https
-      traefik.http.middlewares.sslheaders.customrequestheaders.X-Forwarded-Proto: https
+      #traefik.http.middlewares.sslheaders.customrequestheaders.X-Forwarded-Proto: https
       traefik.http.routers.traefik.middlewares: traefik-https-redirect
       traefik.http.routers.traefik-secure.entryPoints: websecure
+      traefik.http.middlewares.traefik-auth.basicauth.users: ${TRAEFIK_DASHBOARD_CREDENTIALS}
       traefik.http.routers.traefik-secure.rule: Host(`${MAIN_DOMAIN}`) && PathPrefix(`/traefik`)
       traefik.http.routers.traefik-secure.middlewares: traefik-auth
       traefik.http.routers.traefik-secure.tls: true

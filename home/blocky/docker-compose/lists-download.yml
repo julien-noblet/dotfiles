@@ -10,10 +10,10 @@ services:
         restart: true
     restart: unless-stopped
     volumes:
-      - lists-download/sources:/sources/sources:ro # Source lists
-      - lists-download/watch:/web/watch:ro         # Watch lists
-      - bld-downloaded:/web/downloaded            # Downloaded lists
-      - ./blocky/index.html:/web/index.html:ro    # Fake index file used for health checks
+      - ./lists-download/sources:/sources/sources:ro # Source lists
+      - ./lists-download/watch:/web/watch:ro         # Watch lists
+      - bld-downloaded:/web/downloaded               # Downloaded lists
+      - ./blocky/index.html:/web/index.html:ro       # Fake index file used for health checks
     environment:
       # Possible values are DEBUG INFO WARN ERROR and NONE. Case sensitive.
       BLU_LOG_LEVEL: INFO

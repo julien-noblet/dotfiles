@@ -5,7 +5,7 @@ services:
     image: spx01/blocky:latest
     container_name: blocky
     depends_on:
-      postgres:
+      blocky_postgres:
         condition: service_healthy
         restart: true
       traefik:

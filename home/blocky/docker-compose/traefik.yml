@@ -1,0 +1,86 @@
+services:
+  traefik:
+    image: traefik:latest
+    container_name: traefik
+    env_file:
+      - .env
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik/config.yaml:/dynamic/config.yaml:ro
+      - ./traefik/acme.json:/acme.json
+    environment:
+      TZ: Europe/Paris
+      TRAEFIK_DASHBOARD_CREDENTIALS: ${TRAEFIK_DASHBOARD_CREDENTIALS}
+      MAIN_DOMAIN: ${MAIN_DOMAIN}
+      EMAIL: ${EMAIL}
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      # Port 80 is only used for redirecting to https.
+      # Let's Encrypt uses the challenge on port 443 to verify the domain (TLS-ALPN-01).
+      # See https://doc.traefik.io/traefik/https/acme/#tlschallenge for more information.
+      - 80:80 # web
+      - 443:443 # websecure
+      # - 8080:8080 # traefik dashboard (redirected to domain.tld/traefik/)
+      - 49181:49181 # kuma
+    networks:
+      # - blocky (disabled)
+      - public
+      # - loki (disabled)
+      - traefik
+    command:
+      - --log.level=DEBUG
+      - --log.format=json
+      - --api.basePath=/traefik
+      # - --api.insecure=true
+      - --entryPoints.web.address=:80
+      - --providers.docker=true
+      # Do not expose containers unless explicitly requested
+      - --providers.docker.exposedbydefault=false
+      # - --providers.docker.allowEmptyServices=true
+      - --entryPoints.websecure.address=:443
+      # - --entryPoints.loki.address=:3100
+      - --entryPoints.kuma.address=:49181
+      - --ping=true
+      - --metrics.addinternals
+      - --metrics.prometheus.buckets=0.1,0.3,1.2,5.0
+      - --accesslog=true
+      - --providers.file.directory=/dynamic
+      - --providers.file.watch=true
+      - --certificatesresolvers.myresolver.acme.httpchallenge=true
+      - --certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web
+      - --certificatesresolvers.myresolver.acme.caServer=https://acme-v02.api.letsencrypt.org/directory
+      - --certificatesresolvers.myresolver.acme.email=${EMAIL}
+      - --certificatesresolvers.myresolver.acme.storage=acme.json
+      - --certificatesresolvers.myresolver.acme.tlschallenge=true
+
+    restart: always
+    healthcheck:
+      # traefik healthcheck command
+      # https://doc.traefik.io/traefik/operations/cli/#healthcheck
+      test: ["CMD", "traefik", "healthcheck", "--ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    dns: 1.1.1.1
+    labels:
+      traefik.enable: true
+      traefik.http.routers.traefik.entryPoints: web
+      traefik.http.routers.traefik.rule: Host(`${MAIN_DOMAIN}`) && PathPrefix(`/traefik`)
+      traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme: https
+      traefik.http.routers.traefik.middlewares: traefik-https-redirect
+      traefik.http.routers.traefik-secure.entryPoints: websecure
+      traefik.http.middlewares.traefik-auth.basicauth.users: ${TRAEFIK_DASHBOARD_CREDENTIALS}
+      traefik.http.routers.traefik-secure.rule: Host(`${MAIN_DOMAIN}`) && PathPrefix(`/traefik`)
+      traefik.http.routers.traefik-secure.middlewares: traefik-auth
+      traefik.http.routers.traefik-secure.tls: true
+      traefik.http.routers.traefik-secure.tls.certresolver: myresolver
+      traefik.http.routers.traefik-secure.tls.domains[0].main: ${MAIN_DOMAIN}
+      traefik.http.routers.traefik-secure.tls.domains[0].sans: ${MAIN_DOMAIN}
+      traefik.http.routers.traefik-secure.service: api@internal
+
+networks:
+  traefik:
+    name: traefik
+    internal: true

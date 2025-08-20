@@ -29,10 +29,13 @@ asdf:
       version: 0.11.3
       plugin_url:
     - name: nodejs
-      version: 24.5.0
+      version: 24.6.0
       plugin_url:
     - name: rclone
       version: 1.70.3
+      plugin_url:
+    - name: shellcheck
+      version: 0.11.0
       plugin_url:
     - name: shfmt
       version: 3.12.0

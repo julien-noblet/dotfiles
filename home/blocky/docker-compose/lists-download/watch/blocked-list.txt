@@ -1,3 +1,0 @@
-# Manualy blocked
-
-*.0-0.fr

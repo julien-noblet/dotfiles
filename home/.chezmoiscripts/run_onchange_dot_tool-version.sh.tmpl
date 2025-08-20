@@ -47,5 +47,10 @@ echo "installing {{.name}} {{.version}}"
 if [ -z "$(~/.asdf/bin/asdf list {{ .name }} | grep {{ .version }})" ]; then
 	~/.asdf/bin/asdf install {{ .name }} {{ .version }}
 fi
+# remove old versions
+for mytool in $(asdf list {{ .name }} | grep -v {{ .version }}); do 
+	echo "removing {{ .name }} $mytool"
+	asdf uninstall {{ .name }} $mytool; 
+done;
 {{ end -}}
 {{ end -}}

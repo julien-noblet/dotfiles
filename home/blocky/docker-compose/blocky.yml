@@ -43,7 +43,7 @@ services:
     container_name: blocky_postgres
     hostname: blocky_postgres
     volumes:
-      - postgres:/var/lib/postgresql/data/
+      - blocky_postgres:/var/lib/postgresql/data/
       - ../backups/postgres.sql:/docker-entrypoint-initdb.d/postgres.sql:ro
     env_file:
       .env
@@ -100,6 +100,6 @@ volumes:
       type: none
       device: ./blocky
       o: bind
-  postgres:
+  blocky_postgres:
 
 

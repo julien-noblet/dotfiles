@@ -32,7 +32,7 @@ asdf:
       version: 24.6.0
       plugin_url:
     - name: rclone
-      version: 1.70.3
+      version: 1.71.0
       plugin_url:
     - name: shellcheck
       version: 0.11.0

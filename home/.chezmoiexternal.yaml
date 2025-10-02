@@ -14,6 +14,10 @@
     type: git-repo
     url: "git@github.com:julien-noblet/julien-noblet.github.io.git"
     refreshPeriod: "2h"
+"projects/ebcdic":
+    type: git-repo
+    url: "git@github.com:julien-noblet/ebcdic.git"
+    refreshPeriod: "2h"
 {{ end }}
 
 # Install ender3pro

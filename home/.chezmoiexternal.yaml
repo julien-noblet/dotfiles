@@ -18,6 +18,42 @@
     type: git-repo
     url: "git@github.com:julien-noblet/ebcdic.git"
     refreshPeriod: "2h"
+"projects/k8s/argoCD":
+    type: git-repo
+    url: "git@github.com:julien-noblet/argoCD.git"
+    refreshPeriod: "24h"
+"projects/k8s/cwa"
+    type: git-repo
+    url: "git@github.com:julien-noblet/k8s-cwa.git"
+    refreshPeriod: "24h"
+"projects/k8s/manifolds"
+    type: git-repo
+    url: "git@github.com:julien-noblet/k8s-manifold.git"
+    refreshPeriod: "24h"
+"projects/k8s/blocky"
+    type: git-repo
+    url: "git@github.com:julien-noblet/terraform-blocky.git"
+    refreshPeriod: "24h"
+"projects/k8s/readeck"
+    type: git-repo
+    url: "git@github.com:julien-noblet/kubernetes-readeck.git"
+    refreshPeriod: "24h"
+"projects/k8s/miniflux"
+    type: git-repo
+    url: "git@github.com:julien-noblet/kubernetes-miniflux.git"
+    refreshPeriod: "24h"
+"projects/k8s/tools"
+    type: git-repo
+    url: "git@github.com:julien-noblet/kubernetes-tools.git"
+    refreshPeriod: "24h"
+"projects/3d-printer-calculator":
+    type: git-repo
+    url: "ssh://git@gitea.local:2222/julien/3d-calculator.git"
+    refreshPeriod: "24h"
+"projects/gitea":
+    type: git-repo
+    url: "ssh://git@gitea.local:2222/julien/k8s-gitea.git"
+    refreshPeriod: "24h"
 {{ end }}
 
 # Install ender3pro

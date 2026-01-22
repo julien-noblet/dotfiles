@@ -22,27 +22,27 @@
     type: git-repo
     url: "git@github.com:julien-noblet/argoCD.git"
     refreshPeriod: "24h"
-"projects/k8s/cwa"
+"projects/k8s/cwa":
     type: git-repo
     url: "git@github.com:julien-noblet/k8s-cwa.git"
     refreshPeriod: "24h"
-"projects/k8s/manifolds"
+"projects/k8s/manifolds":
     type: git-repo
     url: "git@github.com:julien-noblet/k8s-manifold.git"
     refreshPeriod: "24h"
-"projects/k8s/blocky"
+"projects/k8s/blocky":
     type: git-repo
     url: "git@github.com:julien-noblet/terraform-blocky.git"
     refreshPeriod: "24h"
-"projects/k8s/readeck"
+"projects/k8s/readeck":
     type: git-repo
     url: "git@github.com:julien-noblet/kubernetes-readeck.git"
     refreshPeriod: "24h"
-"projects/k8s/miniflux"
+"projects/k8s/miniflux":
     type: git-repo
     url: "git@github.com:julien-noblet/kubernetes-miniflux.git"
     refreshPeriod: "24h"
-"projects/k8s/tools"
+"projects/k8s/tools":
     type: git-repo
     url: "git@github.com:julien-noblet/kubernetes-tools.git"
     refreshPeriod: "24h"

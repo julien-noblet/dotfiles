@@ -48,12 +48,12 @@
     refreshPeriod: "24h"
 "projects/3d-printer-calculator":
     type: git-repo
-    url: "ssh://git@gitea.local:2222/julien/3d-calculator.git"
+    url: "ssh://git@gitlab.com:julien-noblet/3dcost.git"
     refreshPeriod: "24h"
-"projects/gitea":
-    type: git-repo
-    url: "ssh://git@gitea.local:2222/julien/k8s-gitea.git"
-    refreshPeriod: "24h"
+#"projects/gitea":
+#    type: git-repo
+#    url: "ssh://git@gitea.local:2222/julien/k8s-gitea.git"
+#    refreshPeriod: "24h"
 {{ end }}
 
 # Install ender3pro

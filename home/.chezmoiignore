@@ -1,4 +1,18 @@
-key.txt.age
+# Ignorer la clé déchiffrée (créée par le script run_once_after)
+.config/chezmoi/key.txt
+
+# Ignorer les fichiers chiffrés tant que la clé age n'existe pas
+# Un second `chezmoi apply` installera automatiquement les fichiers chiffrés
+{{ if not (stat (joinPath .chezmoi.homeDir ".config/chezmoi/key.txt")) }}
+.config/rclone/rclone.conf
+.gitconfig
+.kube/config
+.ssh/id_rsa
+blocky/docker-compose/.env
+blocky/docker-compose/blocky/config.yml
+printer_data/config/telegram.conf
+{{ end }}
+
 {{ if not (or (eq .chezmoi.hostname "ender3pro") .is_wsl) }}
 printer_data/**
 printer_data

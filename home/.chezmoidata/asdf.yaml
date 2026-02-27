@@ -4,9 +4,6 @@ asdf:
     - name: age
       version: 1.2.1
       plugin_url:
-    - name: rust
-      version: 1.93.1
-      plugin_url:
     - name: bat
       version: 0.25.0
       plugin_url:

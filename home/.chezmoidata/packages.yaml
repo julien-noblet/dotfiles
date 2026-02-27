@@ -8,3 +8,4 @@ packages:
     - 'zip'
     - 'unzip'
     - 'zstd'
+    - 'rustc'

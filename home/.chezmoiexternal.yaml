@@ -1,5 +1,6 @@
 {{ if eq .chezmoi.os "linux" -}}
-{{ if eq .chezmoi.hostname "victus" -}}
+{{- $hasAgeKey := stat (joinPath .chezmoi.homeDir ".config/chezmoi/key.txt") -}}
+{{ if and (eq .chezmoi.hostname "victus") $hasAgeKey -}}
 # add WIP repos
 
 "projects/download-geofabrik":

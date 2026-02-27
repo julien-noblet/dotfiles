@@ -1,8 +1,7 @@
 {{- if eq .chezmoi.os "windows" -}}
-if (-Not (Test-Path "{{ .chezmoi.config.destDir }}\.config\chezmoi\key.txt")) {
-    New-Item -ItemType Directory -Force -Path "{{ .chezmoi.config.destDir }}\.config\chezmoi" | Out-Null
-    chezmoi age decrypt --output "{{ .chezmoi.config.destDir }}\.config\chezmoi\key.txt" --passphrase "{{ .chezmoi.sourceDir }}\key.txt.age"
-    icacls "{{ .chezmoi.config.destDir }}\.config\chezmoi\key.txt" /inheritance:r /grant:r "$($env:USERNAME):(F)" | Out-Null
+if (-Not (Test-Path "{{ .chezmoi.homeDir }}\.config\chezmoi\key.txt")) {
+    chezmoi age decrypt --output "{{ .chezmoi.homeDir }}\.config\chezmoi\key.txt" --passphrase "{{ .chezmoi.homeDir }}\.config\chezmoi\key.txt.age"
+    icacls "{{ .chezmoi.homeDir }}\.config\chezmoi\key.txt" /inheritance:r /grant:r "$($env:USERNAME):(F)" | Out-Null
 }
 
 {{- end -}}

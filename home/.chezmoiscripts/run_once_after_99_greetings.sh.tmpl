@@ -1,0 +1,10 @@
+{{- if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+
+echo "Chezmoi is running for the first time after decrypting the private key, you may see some errors about missing files, just run 'chezmoi apply' again and it should work fine"
+{{- end -}}
+
+{{- if eq .chezmoi.os "windows" -}}
+Write-Host "Chezmoi is running for the first time after decrypting the private key
+, you may see some errors about missing files, just run 'chezmoi apply' again and it should work fine"
+{{- end -}}

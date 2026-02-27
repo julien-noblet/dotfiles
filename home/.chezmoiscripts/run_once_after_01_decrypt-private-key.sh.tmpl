@@ -1,9 +1,8 @@
 {{- if eq .chezmoi.os "linux" -}}
 #!/bin/sh
 
-if [ ! -f "{{ .chezmoi.config.destDir }}/.config/chezmoi/key.txt" ]; then
-	mkdir -p "{{ .chezmoi.config.destDir }}/.config/chezmoi"
-	chezmoi age decrypt --output "{{ .chezmoi.config.destDir }}/.config/chezmoi/key.txt" --passphrase "{{ .chezmoi.sourceDir }}/key.txt.age"
-	chmod 600 "{{ .chezmoi.config.destDir }}/.config/chezmoi/key.txt"
+if [ ! -f "{{ .chezmoi.homeDir }}/.config/chezmoi/key.txt" ]; then
+	chezmoi age decrypt --output "{{ .chezmoi.homeDir }}/.config/chezmoi/key.txt" --passphrase "{{ .chezmoi.homeDir }}/.config/chezmoi/key.txt.age"
+	chmod 600 "{{ .chezmoi.homeDir }}/.config/chezmoi/key.txt"
 fi
 {{- end -}}

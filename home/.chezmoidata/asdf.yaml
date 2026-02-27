@@ -43,6 +43,9 @@ asdf:
     - name: upx
       version: 5.0.2
       plugin_url:
+    - name: rust
+      version: 1.93.1
+      plugin_url:
     - name: yq
       version: 4.52.2
       plugin_url:

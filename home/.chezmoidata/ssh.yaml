@@ -1,0 +1,5 @@
+ssh:
+  known_hosts:
+    - github.com
+    - gitlab.com
+    - bitbucket.org

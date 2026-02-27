@@ -13,9 +13,9 @@ To set up your environment using these dotfiles, follow the steps below:
     source ~/.bashrc 
     ```
 
-2. **Clone the Repository**:
+2. **Clone the Repository and Apply Dotfiles**:
     ```sh
-    chezmoi init --apply julien-noblet
+    chezmoi init --apply julien-noblet ; chezmoi apply
     ```
 
 

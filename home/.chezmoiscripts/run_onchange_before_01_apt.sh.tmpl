@@ -5,10 +5,8 @@
 sudo apt update
 sudo apt upgrade -y
 
-sudo apt install -y
-{{ range .packages.debian.apt -}}
-sudo apt install -y {{ . | quote }} 
-{{ end -}}
+sudo apt install -y {{ range .packages.debian.apt }}{{ . | quote }} {{ end }}
+
 sudo apt autoremove -y
 
 {{ end -}}

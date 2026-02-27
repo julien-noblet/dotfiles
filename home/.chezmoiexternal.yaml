@@ -18,10 +18,6 @@
     type: git-repo
     url: "git@github.com:julien-noblet/ebcdic.git"
     refreshPeriod: "2h"
-"projects/k8s/argoCD":
-    type: git-repo
-    url: "git@github.com:julien-noblet/argoCD.git"
-    refreshPeriod: "24h"
 "projects/k8s/cwa":
     type: git-repo
     url: "git@github.com:julien-noblet/k8s-cwa.git"
@@ -48,7 +44,7 @@
     refreshPeriod: "24h"
 "projects/3d-printer-calculator":
     type: git-repo
-    url: "ssh://git@gitlab.com:julien-noblet/3dcost.git"
+    url: "git@gitlab.com:julien-noblet/3dcost.git"
     refreshPeriod: "24h"
 #"projects/gitea":
 #    type: git-repo

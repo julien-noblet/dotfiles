@@ -1,0 +1,79 @@
+name: Update encrypted files list in .chezmoiignore
+
+on:
+  push:
+    branches: [master, main]
+    paths:
+      - 'home/**/encrypted_*'
+  workflow_dispatch:
+
+jobs:
+  update-list:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate encrypted files list
+        id: generate
+        run: |
+          # Trouver tous les fichiers encrypted_*.age et convertir en chemins de destination
+          ENCRYPTED_FILES=$(find home -name 'encrypted_*.age' -type f | while read -r file; do
+            # Extraire le chemin relatif depuis home/
+            rel_path="${file#home/}"
+            # Supprimer le préfixe encrypted_ et le suffixe .age
+            dest_path=$(echo "$rel_path" | sed -E 's/encrypted_([^/]+)\.age$/\1/' | sed 's/dot_/./g' | sed 's/private_//g')
+            echo "$dest_path"
+          done | sort)
+
+          echo "Generated list:"
+          echo "$ENCRYPTED_FILES"
+
+          # Sauvegarder dans un fichier temporaire
+          echo "$ENCRYPTED_FILES" > /tmp/encrypted_list.txt
+
+      - name: Update .chezmoiignore
+        run: |
+          IGNORE_FILE="home/.chezmoiignore"
+          
+          # Lire la nouvelle liste
+          NEW_LIST=$(cat /tmp/encrypted_list.txt)
+          
+          # Créer le bloc à insérer
+          BLOCK=$(echo "$NEW_LIST" | tr '\n' '\n')
+          
+          # Utiliser awk pour remplacer le contenu entre les marqueurs
+          awk -v block="$BLOCK" '
+            /^{{ if not \(stat \(joinPath \.chezmoi\.homeDir "\.config\/chezmoi\/key\.txt"\)\) }}$/ {
+              print
+              print block
+              skip = 1
+              next
+            }
+            /^{{ end }}$/ && skip {
+              skip = 0
+            }
+            !skip { print }
+          ' "$IGNORE_FILE" > /tmp/chezmoiignore.new
+          
+          mv /tmp/chezmoiignore.new "$IGNORE_FILE"
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if git diff --quiet home/.chezmoiignore; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add home/.chezmoiignore
+          git commit -m "chore: update encrypted files list in .chezmoiignore"
+          git push

@@ -44,7 +44,7 @@ asdf:
       version: 5.0.2
       plugin_url:
     - name: yq
-      version: 4.47.1
+      version: 4.52.2
       plugin_url:
     - name: gum
       version: 0.16.2

@@ -20,7 +20,7 @@
     refreshPeriod: "2h"
 "projects/k8s/argoCD":
     type: git-repo
-    url: "ssh://git@gitea.local:2222/julien/argoCD.git"
+    url: "git@github.com:julien-noblet/argoCD.git"
     refreshPeriod: "24h"
 "projects/k8s/cwa":
     type: git-repo

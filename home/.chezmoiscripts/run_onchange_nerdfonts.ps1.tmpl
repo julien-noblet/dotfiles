@@ -1,6 +1,6 @@
 # Install nerdfonts
 {{- if eq .chezmoi.os "windows" -}}
-$fonts = @("FiraCode Nerd Font", "Hack Nerd Font", "JetBrains Mono Nerd Font", "Cascadia Mono Nerd Font", "Source Code Pro Nerd Font", "DejaVu Sans Mono Nerd Font", "MesloLGS NF Regular", "Monoid Nerd Font", "Ubuntu Mono Nerd Font")
+$fonts = @("FiraCode", "Hack", "JetBrainsMono", "CascadiaMono", "SourceCodePro", "DejaVuSansMono", "Meslo", "Monoid", "UbuntuMono")
 
 # get latest release of nerdfonts
 $latestRelease = Invoke-RestMethod -Uri "https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest"

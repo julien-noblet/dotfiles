@@ -13,6 +13,8 @@ foreach ($font in $fonts) {
     Expand-Archive -Path $output -DestinationPath "$env:TEMP\$font"
     $fontFiles = Get-ChildItem -Path "$env:TEMP\$font" -Include *.ttf, *.otf -Recurse
     foreach ($fontFile in $fontFiles) {
+        # be verbose about the font being installed, as it can take a while and it's not always clear that something is happening
+        Write-Host "Installing font $($fontFile.Name)..."
         $destination = "$env:WINDIR\Fonts\$($fontFile.Name)"
         if (-not (Test-Path $destination)) {
             Copy-Item -Path $fontFile.FullName -Destination $destination

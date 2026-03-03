@@ -1,0 +1,186 @@
+# Install nerdfonts
+{{- if eq .chezmoi.os "windows" -}}
+Write-Host "--- DÉMARRAGE INSTALLATION NERD FONTS ---" -ForegroundColor Yellow
+
+$fonts = @("FiraCode", "Hack", "JetBrainsMono", "CascadiaMono", "SourceCodePro", "DejaVuSansMono", "Meslo", "Monoid", "UbuntuMono")
+
+Write-Host "Recherche de la version sur GitHub..."
+try {
+    $latestRelease = Invoke-RestMethod -Uri "https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest" -ErrorAction Stop
+    Write-Host "Version : $($latestRelease.tag_name)" -ForegroundColor Green
+} catch {
+    Write-Host "ERREUR API GITHUB : $_" -ForegroundColor Red
+    return
+}
+
+$globalBatchCommands = @("@echo off")
+$count = 0
+
+foreach ($font in $fonts) {
+    $count++
+    $percent = [math]::Floor(($count / $fonts.Count) * 100)
+    Write-Progress -Activity "Installation Nerd Fonts" -Status "Traitement de $font ($count/9)" -PercentComplete $percent
+    
+    Write-Host "`n>> [$count/9] Traitement de $font..." -ForegroundColor Cyan
+    $url = "https://github.com/ryanoasis/nerd-fonts/releases/download/$($latestRelease.tag_name)/$font.zip"
+    $output = Join-Path $env:TEMP "$font.zip"
+    $fontTempDir = Join-Path $env:TEMP $font
+    
+    if (Test-Path $fontTempDir) { 
+        Remove-Item -Path $fontTempDir -Recurse -Force -ErrorAction SilentlyContinue
+    }
+    
+    Write-Host "   Téléchargement..." -NoNewline
+    try {
+        Invoke-WebRequest -Uri $url -OutFile $output -ErrorAction Stop
+        Write-Host " OK ($((Get-Item $output).Length / 1MB -as [int]) MB)" -ForegroundColor Green
+    } catch {
+        Write-Host " ÉCHEC !" -ForegroundColor Red
+        Write-Host "   $(_)" -ForegroundColor Gray
+        continue
+    }
+    
+    Write-Host "   Extraction..." -NoNewline
+    try {
+        Expand-Archive -Path $output -DestinationPath $fontTempDir -Force -ErrorAction Stop
+        Write-Host " OK" -ForegroundColor Green
+    } catch {
+        Write-Host " ÉCHEC !" -ForegroundColor Red
+        continue
+    }
+    
+    $fontFiles = Get-ChildItem -Path $fontTempDir -Include *.ttf, *.otf -Recurse
+    Write-Host "   $( $fontFiles.Count ) fichiers ajoutés à la file." -ForegroundColor Gray
+    
+    foreach ($fontFile in $fontFiles) {
+        $destination = "$env:WINDIR\Fonts\$($fontFile.Name)"
+        $globalBatchCommands += "copy /y `"$($fontFile.FullName)`" `"$destination`" >nul"
+        
+        $fontName = $fontFile.BaseName
+        if ($fontFile.Extension -eq ".ttf") { $fontName += " (TrueType)" }
+        elseif ($fontFile.Extension -eq ".otf") { $fontName += " (OpenType)" }
+        
+        $registryKey = "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts"
+        $globalBatchCommands += "reg add `"$registryKey`" /v `"$fontName`" /t REG_SZ /d `"$($fontFile.Name)`" /f >nul"
+    }
+    if (Test-Path $output) { Remove-Item -Path $output -Force }
+}
+Write-Progress -Activity "Installation Nerd Fonts" -Completed
+
+# Dynamically find gsudo for administrative tasks
+    $gsudoPath = $null
+    $potentialPaths = @(
+        "$env:ProgramFiles\gsudo\current\gsudo.exe",
+        "$env:ProgramFiles\gsudo\gsudo.exe",
+        "C:\Program Files\gsudo\2.6.1\gsudo.exe"
+    )
+    foreach ($p in $potentialPaths) {
+        if ($p -and (Test-Path $p)) { $gsudoPath = $p; break }
+    }
+    if (-not $gsudoPath) { 
+        $gsudoPath = (Get-Command gsudo -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source -ErrorAction SilentlyContinue)
+    }
+    if (-not $gsudoPath) { $gsudoPath = "gsudo" }
+
+    # Check if we already have administrative privileges
+    $currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+    $isAlreadyAdmin = $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+
+    # Accumulate all administrative commands to run them in a single global elevated session
+$globalBatchFilePath = Join-Path $env:TEMP "install_all_nerdfonts.cmd"
+$globalBatchCommands = @("@echo off")
+
+# Utiliser une variable temporaire pour l'index car indexOf peut poser problème dans certains contextes
+$count = 0
+foreach ($font in $fonts) {
+    $count++
+    $percent = [math]::Floor(($count / $fonts.Count) * 100)
+    Write-Progress -Activity "Préparation des Nerd Fonts ($count/$($fonts.Count))" -Status "Traitement de $font..." -PercentComplete $percent
+    
+    Write-Host "--- Traitement de $font ($count/$($fonts.Count)) ---" -ForegroundColor Cyan
+    $url = "https://github.com/ryanoasis/nerd-fonts/releases/download/$($latestRelease.tag_name)/$font.zip"
+    $output = "$env:TEMP\$font.zip"
+    $fontTempDir = Join-Path $env:TEMP $font
+    
+    if (Test-Path $fontTempDir) { 
+        Write-Host "Nettoyage du dossier temporaire pour $font..."
+        Remove-Item -Path $fontTempDir -Recurse -Force -ErrorAction SilentlyContinue
+    }
+    
+    Write-Host "Téléchargement depuis $url..." -ForegroundColor Gray
+    try {
+        # Utilisation de -ErrorAction Stop pour capturer les erreurs de téléchargement
+        Invoke-WebRequest -Uri $url -OutFile $output -ErrorAction Stop
+        Write-Host "Téléchargement réussi : $( (Get-Item $output).Length / 1MB -as [int] ) MB" -ForegroundColor Green
+    } catch {
+        Write-Host "ERREUR de téléchargement pour $font : $_" -ForegroundColor Red
+        continue
+    }
+    
+    Write-Host "Extraction des fichiers..." -ForegroundColor Gray
+    try {
+        Expand-Archive -Path $output -DestinationPath $fontTempDir -Force -ErrorAction Stop
+    } catch {
+        Write-Host "ERREUR d'extraction pour $font : $_" -ForegroundColor Red
+        continue
+    }
+    
+    $fontFiles = Get-ChildItem -Path $fontTempDir -Include *.ttf, *.otf -Recurse
+    Write-Host "Ajout de $($fontFiles.Count) fichiers de police à la file d'attente..." -ForegroundColor Yellow
+    
+    foreach ($fontFile in $fontFiles) {
+        $destination = "$env:WINDIR\Fonts\$($fontFile.Name)"
+        # Copy command
+        $globalBatchCommands += "copy /y `"$($fontFile.FullName)`" `"$destination`" >nul"
+        
+        # Registry registration command
+        $fontName = $fontFile.BaseName
+        if ($fontFile.Extension -eq ".ttf") { $fontName += " (TrueType)" }
+        elseif ($fontFile.Extension -eq ".otf") { $fontName += " (OpenType)" }
+        
+        $registryKey = "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts"
+        $globalBatchCommands += "reg add `"$registryKey`" /v `"$fontName`" /t REG_SZ /d `"$($fontFile.Name)`" /f >nul"
+    }
+    
+    if (Test-Path $output) { Remove-Item -Path $output -Force }
+}
+Write-Progress -Activity "Préparation des Nerd Fonts" -Completed
+
+# Dynamically find gsudo for administrative tasks
+$gsudoPath = $null
+$potentialPaths = @(
+    "$env:ProgramFiles\gsudo\current\gsudo.exe",
+    "$env:ProgramFiles\gsudo\gsudo.exe",
+    "C:\Program Files\gsudo\2.6.1\gsudo.exe"
+)
+foreach ($p in $potentialPaths) {
+    if ($p -and (Test-Path $p)) { $gsudoPath = $p; break }
+}
+if (-not $gsudoPath) {
+    $gsudoPath = (Get-Command gsudo -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source -ErrorAction SilentlyContinue)
+}
+if (-not $gsudoPath) { $gsudoPath = "gsudo" }
+
+# Check if we already have administrative privileges
+$currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+$isAlreadyAdmin = $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+
+$globalBatchCommands | Out-File -FilePath $globalBatchFilePath -Encoding ascii
+
+# Execute the global batch file with a single elevation request
+Write-Host "--- DÉMARRAGE DE L'INSTALLATION ÉLEVÉE (UNE SEULE FOIS) ---"
+if ($isAlreadyAdmin) {
+    & cmd.exe /c $globalBatchFilePath
+} else {
+    Write-Host "Élévation requise pour installer TOUTES les polices en une seule fois..."
+    & $gsudoPath cmd.exe /c $globalBatchFilePath
+}
+
+# Final cleanup
+Write-Host "Nettoyage des fichiers temporaires..."
+foreach ($font in $fonts) {
+    if (Test-Path "$env:TEMP\$font") { Remove-Item -Path "$env:TEMP\$font" -Recurse -Force }
+}
+Remove-Item -Path $globalBatchFilePath -ErrorAction SilentlyContinue
+Write-Host "--- INSTALLATION TERMINÉE ---"
+{{- end -}}

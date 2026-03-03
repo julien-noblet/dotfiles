@@ -1,0 +1,37 @@
+# Install nerdfonts
+{{- if eq .chezmoi.os "windows" -}}
+$fonts = @(
+    "FiraCode Nerd Font",
+    "Hack Nerd Font",
+    "JetBrains Mono Nerd Font",
+    "Cascadia Mono Nerd Font",
+    "Source Code Pro Nerd Font",
+    "DejaVu Sans Mono Nerd Font",
+    "MesloLGS NF Regular",
+    "Monoid Nerd Font",
+    "Ubuntu Mono Nerd Font"
+    )
+
+# get latest release of nerdfonts
+$latestRelease = Invoke-RestMethod -Uri "https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest"
+
+foreach ($font in $fonts) {
+    Write-Host "Installing $font..."
+    $url = "https://github.com/ryanoasis/nerd-fonts/releases/download/$($latestRelease.tag_name)/$font.zip" 
+    $output = "$env:TEMP\$font.zip"
+    Invoke-WebRequest -Uri $url -OutFile $output
+    Expand-Archive -Path $output -DestinationPath "$env:TEMP\$font"
+    $fontFiles = Get-ChildItem -Path "$env:TEMP\$font" -Include *.ttf, *.otf -Recurse
+    foreach ($fontFile in $fontFiles) {
+        $destination = "$env:WINDIR\Fonts\$($fontFile.Name)"
+        if (-not (Test-Path $destination)) {
+            Copy-Item -Path $fontFile.FullName -Destination $destination
+            $shell = New-Object -ComObject Shell.Application
+            $folder = $shell.NameSpace($env:WINDIR + "\Fonts")
+            $folder.CopyHere($fontFile.FullName)
+        }
+    }
+    Remove-Item -Path $output
+    Remove-Item -Path "$env:TEMP\$font" -Recurse
+}
+{{- end -}}

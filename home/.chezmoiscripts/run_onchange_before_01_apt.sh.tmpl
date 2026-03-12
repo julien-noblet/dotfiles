@@ -7,6 +7,12 @@ sudo apt upgrade -y
 
 sudo apt install -y {{ range .packages.debian.apt }}{{ . | quote }} {{ end }}
 
+{{- if hasKey .packages.debian.hosts .chezmoi.hostname }}
+
+sudo apt install -y {{ range (index .packages.debian.hosts .chezmoi.hostname) }}{{ . | quote }} {{ end }}
+
+{{- end }}
+
 sudo apt autoremove -y
 
 {{ end -}}

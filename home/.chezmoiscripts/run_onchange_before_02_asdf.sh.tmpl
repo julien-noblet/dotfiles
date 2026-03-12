@@ -28,19 +28,24 @@ if [ "$(~/.asdf/bin/asdf --version | cut -d ' ' -f 3)" != "v{{ .asdf.version }}"
 	install_asdf
 fi
 
-{{ range .asdf.tools -}}
+{{- range .asdf.tools -}}
+{{- $install := true -}}
+{{- if hasKey . "hosts" -}}
+  {{- $install = (has $.chezmoi.hostname .hosts) -}}
+{{- end -}}
+
+{{- if $install }}
+
 # install plugins
 # if .plugin_url does not exist then use ""
 if [ -z "$(~/.asdf/bin/asdf plugin list | grep {{ .name }})" ]; then
 	echo "installing {{.name}} plugin"
-	~/.asdf/bin/asdf plugin add {{ .name }} {{ .plugin_url | default "" }}
+	~/.asdf/bin/asdf plugin add {{ .name }} {{ if hasKey . "plugin_url" }}{{ .plugin_url | quote }}{{ else }}""{{ end }}
 else
 	# if plugin is already installed then update it
 	~/.asdf/bin/asdf plugin update {{ .name }}
 fi
-{{ end -}}
 
-{{ range .asdf.tools -}}
 # install tool
 # if tool is not installed then install it
 echo "installing {{.name}} {{.version}}"
@@ -52,5 +57,7 @@ for mytool in $(asdf list {{ .name }} | grep -v {{ .version }} | sed -e s/\*//);
 	echo "removing {{ .name }} $mytool"
 	asdf uninstall {{ .name }} $mytool; 
 done;
-{{ end -}}
-{{ end -}}
+
+{{- end }}
+{{- end }}
+{{- end -}}

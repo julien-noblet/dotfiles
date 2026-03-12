@@ -1,87 +1,100 @@
 asdf:
-  version: 0.18.0
+  version: 0.18.1
   tools:
     - name: age
       version: 1.3.1
-      plugin_url:
+    - name: rust
+      version: 1.94.0
     - name: bat
       version: 0.26.1
-      plugin_url:
     - name: chezmoi
       version: 2.69.4
-      plugin_url:
     - name: github-cli
       version: 2.87.3
-      plugin_url:
+      hosts:
+        - victus
     - name: golang
       version: 1.26.1
-      plugin_url:
+      hosts:
+        - victus
     - name: hugo
       version: 0.157.0
-      plugin_url:
+      hosts:
+        - victus
     - name: lazygit
       version: 0.60.0
-      plugin_url:
+      hosts:
+        - victus
     - name: lsd
       plugin_url: https://github.com/ossareh/asdf-lsd.git
       version: 1.2.0
     - name: neovim
       version: 0.11.6
-      plugin_url:
     - name: nodejs
       version: 25.8.0
-      plugin_url:
+      hosts:
+        - victus
     - name: rclone
       version: 1.73.2
-      plugin_url:
     - name: shellcheck
       version: 0.11.0
-      plugin_url:
+      hosts:
+        - victus
     - name: shfmt
       version: 3.13.0
-      plugin_url:
+      hosts:
+        - victus
     - name: upx
       version: 5.1.1
-      plugin_url:
+      hosts:
+        - victus
     - name: yq
       version: 4.52.4
-      plugin_url:
     - name: gum
       version: 0.17.0
-      plugin_url:
     - name: starship
       version: 1.24.2
-      plugin_url:
     - name: helm
       version: 4.1.1
-      plugin_url:
+      hosts:
+        - victus
     - name: kubectl
       version: 1.35.2
-      plugin_url:
+      hosts:
+        - victus
     - name: terraform
       version: 1.14.6
-      plugin_url:
+      hosts:
+        - victus
     - name: k9s
       version: 0.50.18
-      plugin_url:
+      hosts:
+        - victus
     - name: kustomize
       version: 5.8.1
-      plugin_url:
+      hosts:
+        - victus
     - name: argocd
       version: 3.3.3
-      plugin_url:
+      hosts:
+        - victus
     - name: golangci-lint
       version: 2.11.2
-      plugin_url:
+      hosts:
+        - victus
     - name: gofumpt
       version: 0.9.2
-      plugin_url:
+      hosts:
+        - victus
     - name: bun
       version: 1.3.10
-      plugin_url:
+      hosts:
+        - victus
     - name: trivy
       version: 0.69.3
-      plugin_url:
+      hosts:
+        - victus
     - name: popeye
       version: 0.22.1
-      plugin_url:
+      hosts:
+        - victus

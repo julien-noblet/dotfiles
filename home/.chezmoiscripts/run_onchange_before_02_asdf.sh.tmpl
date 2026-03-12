@@ -28,36 +28,42 @@ if [ "$(~/.asdf/bin/asdf --version | cut -d ' ' -f 3)" != "v{{ .asdf.version }}"
 	install_asdf
 fi
 
-{{- range .asdf.tools -}}
-{{- $install := true -}}
-{{- if hasKey . "hosts" -}}
-  {{- $install = (has $.chezmoi.hostname .hosts) -}}
-{{- end -}}
+{{ range .asdf.tools }}
+{{ $install := true }}
+{{ if hasKey . "hosts" }}
+  {{ $install = (has $.chezmoi.hostname .hosts) }}
+{{ end }}
 
-{{- if $install }}
+{{ if $install }}
+{{ $tool_name := .name }}
 
 # install plugins
 # if .plugin_url does not exist then use ""
-if [ -z "$(~/.asdf/bin/asdf plugin list | grep {{ .name }})" ]; then
-	echo "installing {{.name}} plugin"
-	~/.asdf/bin/asdf plugin add {{ .name }} {{ if hasKey . "plugin_url" }}{{ .plugin_url | quote }}{{ else }}""{{ end }}
+if [ -z "$(~/.asdf/bin/asdf plugin list | grep {{ $tool_name }})" ]; then
+	echo "installing {{ $tool_name }} plugin"
+	~/.asdf/bin/asdf plugin add {{ $tool_name }} {{ if hasKey . "plugin_url" }}{{ .plugin_url | quote }}{{ else }}""{{ end }}
 else
 	# if plugin is already installed then update it
-	~/.asdf/bin/asdf plugin update {{ .name }}
+	~/.asdf/bin/asdf plugin update {{ $tool_name }}
 fi
 
-# install tool
-# if tool is not installed then install it
-echo "installing {{.name}} {{.version}}"
-if [ -z "$(~/.asdf/bin/asdf list {{ .name }} | grep {{ .version }})" ]; then
-	~/.asdf/bin/asdf install {{ .name }} {{ .version }}
+# install tools
+{{ range .versions }}
+echo "installing {{ $tool_name }} {{ . }}"
+if [ -z "$(~/.asdf/bin/asdf list {{ $tool_name }} | grep {{ . }})" ]; then
+	~/.asdf/bin/asdf install {{ $tool_name }} {{ . }}
 fi
-# remove old versions
-for mytool in $(asdf list {{ .name }} | grep -v {{ .version }} | sed -e s/\*//); do 
-	echo "removing {{ .name }} $mytool"
-	asdf uninstall {{ .name }} $mytool; 
-done;
+{{ end }}
 
+# cleanup old versions
+SPECIFIED_VERSIONS=" {{ range .versions }}{{ . }} {{ end }}"
+for installed_version in $(~/.asdf/bin/asdf list {{ $tool_name }} | sed -e s/\*//); do
+    if [[ ! $SPECIFIED_VERSIONS =~ " $installed_version " ]]; then
+        echo "removing {{ $tool_name }} $installed_version"
+        ~/.asdf/bin/asdf uninstall {{ $tool_name }} $installed_version
+    fi
+done
+
+{{ end }}
+{{ end }}
 {{- end }}
-{{- end }}
-{{- end -}}

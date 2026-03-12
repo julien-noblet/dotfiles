@@ -1,9 +1,9 @@
 {{ range .asdf.tools -}}
-{{ if hasKey . "hosts" }}
-{{ if has $.chezmoi.hostname .hosts }}
+{{ if hasKey . "hosts" -}}
+{{ if has $.chezmoi.hostname .hosts -}}
 {{ .name }} {{ index .versions 0 }}
-{{ end }}
-{{ else }}
+{{ end -}}
+{{ else -}}
 {{ .name }} {{ index .versions 0 }}
-{{ end }}
+{{ end -}}
 {{ end -}}

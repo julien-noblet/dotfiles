@@ -15,7 +15,7 @@ asdf:
         - 2.70.0
     - name: github-cli
       versions: 
-        - 2.87.3
+        - 2.89.0
       hosts:
         - victus
     - name: golang
@@ -25,7 +25,7 @@ asdf:
         - victus
     - name: hugo
       versions: 
-        - 0.157.0
+        - 0.159.1
       hosts:
         - victus
     - name: lazygit
@@ -39,15 +39,15 @@ asdf:
         - 1.2.0
     - name: neovim
       versions: 
-        - 0.11.6
+        - 0.12.0
     - name: nodejs
       versions: 
-        - 25.8.0
+        - 25.8.2
       hosts:
         - victus
     - name: rclone
       versions: 
-        - 1.73.2
+        - 1.73.3
     - name: shellcheck
       versions: 
         - 0.11.0
@@ -65,7 +65,7 @@ asdf:
         - victus
     - name: yq
       versions: 
-        - 4.52.4
+        - 4.52.5
     - name: gum
       versions: 
         - 0.17.0
@@ -74,17 +74,17 @@ asdf:
         - 1.24.2
     - name: helm
       versions: 
-        - 4.1.1
+        - 4.1.3
       hosts:
         - victus
     - name: kubectl
       versions: 
-        - 1.35.2
+        - 1.35.3
       hosts:
         - victus
     - name: terraform
       versions: 
-        - 1.14.6
+        - 1.14.8
       hosts:
         - victus
     - name: k9s
@@ -104,7 +104,7 @@ asdf:
         - victus
     - name: golangci-lint
       versions: 
-        - 2.11.2
+        - 2.11.4
       hosts:
         - victus
     - name: gofumpt
@@ -114,7 +114,7 @@ asdf:
         - victus
     - name: bun
       versions: 
-        - 1.3.10
+        - 1.3.11
       hosts:
         - victus
     - name: trivy

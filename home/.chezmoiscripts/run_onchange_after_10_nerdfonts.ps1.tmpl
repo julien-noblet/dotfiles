@@ -14,7 +14,7 @@ try {
 $globalBatchCommands = @("@echo off")
 
 $count = 0
-$totalFonts = "{{- len .fonts.NerdFonts }}"
+$totalFonts = "{{ len .fonts.NerdFonts }}"
 {{- range .fonts.NerdFonts -}}
     $font = "{{ . }}"
     $count++

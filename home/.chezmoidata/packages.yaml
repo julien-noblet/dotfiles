@@ -44,3 +44,4 @@ packages:
     - "Prusa3D.PrusaSlicer"
     - "Git.Git"
     - "ZedIndustries.Zed"
+    - "junegunn.fzf"

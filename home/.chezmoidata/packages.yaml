@@ -16,3 +16,21 @@ packages:
         - python3-venv
         - gcc
         - build-essential
+  winget:
+    - "Microsoft.WindowsTerminal"
+    - "Microsoft.VisualStudioCode"
+    - "Microsoft.PowerToys"
+    - "Microsoft.WSL"
+    - "7zip.7zip"
+    - "VideoLAN.VLC"
+    - "Rclone.Rclone"
+    - "Meta.Zstandard"
+    - "SumatraPDF.SumatraPDF"
+    - "twpayne.chezmoi"
+    - "starship.starship"
+    - "Canonical.Ubuntu"
+    - "Google.Antigravity"
+    - "Google.Chrome"
+    - "DominikReichl.KeePass"
+    - "dorssel.usbipd-win"
+    - "gerardog.gsudo"

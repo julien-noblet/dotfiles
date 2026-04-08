@@ -30,7 +30,7 @@ if (Test-Path $winPowershellPath) {
 
 
 # List of tools to install
-{{ range  .winget -}}
+{{ range  .packages.winget -}}
 # Check if the tool is already installed
 $tool = "{{ . }}"
 Write-Host "Checking if $tool is installed..."

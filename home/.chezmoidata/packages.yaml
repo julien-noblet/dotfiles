@@ -45,3 +45,4 @@ packages:
     - "Git.Git"
     - "ZedIndustries.Zed"
     - "junegunn.fzf"
+    - "zig.zig"

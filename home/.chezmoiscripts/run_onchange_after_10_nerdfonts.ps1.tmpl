@@ -92,6 +92,37 @@ Write-Progress -Activity "Installation Nerd Fonts" -Completed
 $globalBatchFilePath = Join-Path $env:TEMP "install_all_nerdfonts.cmd"
 $globalBatchCommands = @("@echo off")
 
+Write-Progress -Activity "Préparation des Nerd Fonts" -Completed
+
+# Dynamically find gsudo for administrative tasks
+$gsudoPath = $null
+$potentialPaths = @(
+    "$env:ProgramFiles\gsudo\current\gsudo.exe",
+    "$env:ProgramFiles\gsudo\gsudo.exe",
+    "C:\Program Files\gsudo\2.6.1\gsudo.exe" # fragile but common path for gsudo
+)
+foreach ($p in $potentialPaths) {
+    if ($p -and (Test-Path $p)) { $gsudoPath = $p; break }
+}
+if (-not $gsudoPath) {
+    $gsudoPath = (Get-Command gsudo -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source -ErrorAction SilentlyContinue)
+}
+if (-not $gsudoPath) { $gsudoPath = "gsudo" }
+
+# Check if we already have administrative privileges
+$currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+$isAlreadyAdmin = $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+
+$globalBatchCommands | Out-File -FilePath $globalBatchFilePath -Encoding ascii
+
+# Execute the global batch file with a single elevation request
+Write-Host "--- DÉMARRAGE DE L'INSTALLATION ÉLEVÉE (UNE SEULE FOIS) ---"
+if ($isAlreadyAdmin) {
+    & cmd.exe /c $globalBatchFilePath
+} else {
+    Write-Host "Élévation requise pour installer TOUTES les polices en une seule fois..."
+    & $gsudoPath cmd.exe /c $globalBatchFilePath
+}
 
 # Final cleanup
 Write-Host "Nettoyage des fichiers temporaires..."

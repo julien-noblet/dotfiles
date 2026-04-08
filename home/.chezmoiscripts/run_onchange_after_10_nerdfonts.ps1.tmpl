@@ -15,7 +15,8 @@ $globalBatchCommands = @("@echo off")
 
 $count = 0
 $totalFonts = "{{ len .fonts.NerdFonts }}"
-{{- range .fonts.NerdFonts -}}
+
+{{ range .fonts.NerdFonts }}
     $font = "{{ . }}"
     $count++
     $percent = [math]::Floor(($count / $totalFonts) * 100)

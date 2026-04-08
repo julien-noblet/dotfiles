@@ -2,8 +2,6 @@
 # Install nerdfonts
 Write-Host "--- DÉMARRAGE INSTALLATION NERD FONTS ---" -ForegroundColor Yellow
 
-$fonts = @("FiraCode", "Hack", "JetBrainsMono", "CascadiaMono", "SourceCodePro", "DejaVuSansMono", "Meslo", "Monoid", "UbuntuMono")
-
 Write-Host "Recherche de la version sur GitHub..."
 try {
     $latestRelease = Invoke-RestMethod -Uri "https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest" -ErrorAction Stop
@@ -14,14 +12,16 @@ try {
 }
 
 $globalBatchCommands = @("@echo off")
-$count = 0
 
-foreach ($font in $fonts) {
+$count = 0
+$totalFonts = "{{- len .packages.nerdfonts -}}"
+{{- range .packages.nerdfonts -}}
+    $font = "{{ . }}"
     $count++
-    $percent = [math]::Floor(($count / $fonts.Count) * 100)
-    Write-Progress -Activity "Installation Nerd Fonts" -Status "Traitement de $font ($count/9)" -PercentComplete $percent
+    $percent = [math]::Floor(($count / $totalFonts) * 100)
+    Write-Progress -Activity "Installation Nerd Fonts" -Status "Traitement de $font ($count/$totalFonts)" -PercentComplete $percent
     
-    Write-Host "`n>> [$count/9] Traitement de $font..." -ForegroundColor Cyan
+    Write-Host "`n>> [$count/$totalFonts] Traitement de $font..." -ForegroundColor Cyan
     $url = "https://github.com/ryanoasis/nerd-fonts/releases/download/$($latestRelease.tag_name)/$font.zip"
     $output = Join-Path $env:TEMP "$font.zip"
     $fontTempDir = Join-Path $env:TEMP $font
@@ -64,7 +64,8 @@ foreach ($font in $fonts) {
         $globalBatchCommands += "reg add `"$registryKey`" /v `"$fontName`" /t REG_SZ /d `"$($fontFile.Name)`" /f >nul"
     }
     if (Test-Path $output) { Remove-Item -Path $output -Force }
-}
+{{- end -}}
+
 Write-Progress -Activity "Installation Nerd Fonts" -Completed
 
 # Dynamically find gsudo for administrative tasks
@@ -72,7 +73,7 @@ Write-Progress -Activity "Installation Nerd Fonts" -Completed
     $potentialPaths = @(
         "$env:ProgramFiles\gsudo\current\gsudo.exe",
         "$env:ProgramFiles\gsudo\gsudo.exe",
-        "C:\Program Files\gsudo\2.6.1\gsudo.exe"
+        "C:\Program Files\gsudo\2.6.1\gsudo.exe" # fragile but common path for gsudo
     )
     foreach ($p in $potentialPaths) {
         if ($p -and (Test-Path $p)) { $gsudoPath = $p; break }
@@ -92,12 +93,13 @@ $globalBatchCommands = @("@echo off")
 
 # Utiliser une variable temporaire pour l'index car indexOf peut poser problème dans certains contextes
 $count = 0
-foreach ($font in $fonts) {
+{{- range .packages.nerdfonts -}}
+    $font = "{{ . }}"
     $count++
-    $percent = [math]::Floor(($count / $fonts.Count) * 100)
-    Write-Progress -Activity "Préparation des Nerd Fonts ($count/$($fonts.Count))" -Status "Traitement de $font..." -PercentComplete $percent
-    
-    Write-Host "--- Traitement de $font ($count/$($fonts.Count)) ---" -ForegroundColor Cyan
+    $percent = [math]::Floor(($count / $totalFonts) * 100)
+    Write-Progress -Activity "Préparation des Nerd Fonts ($count/$totalFonts)" -Status "Traitement de $font..." -PercentComplete $percent
+
+    Write-Host "--- Traitement de $font ($count/$totalFonts) ---" -ForegroundColor Cyan
     $url = "https://github.com/ryanoasis/nerd-fonts/releases/download/$($latestRelease.tag_name)/$font.zip"
     $output = "$env:TEMP\$font.zip"
     $fontTempDir = Join-Path $env:TEMP $font
@@ -143,7 +145,7 @@ foreach ($font in $fonts) {
     }
     
     if (Test-Path $output) { Remove-Item -Path $output -Force }
-}
+{{- end -}}
 Write-Progress -Activity "Préparation des Nerd Fonts" -Completed
 
 # Dynamically find gsudo for administrative tasks
@@ -151,7 +153,7 @@ $gsudoPath = $null
 $potentialPaths = @(
     "$env:ProgramFiles\gsudo\current\gsudo.exe",
     "$env:ProgramFiles\gsudo\gsudo.exe",
-    "C:\Program Files\gsudo\2.6.1\gsudo.exe"
+    "C:\Program Files\gsudo\2.6.1\gsudo.exe" # fragile but common path for gsudo
 )
 foreach ($p in $potentialPaths) {
     if ($p -and (Test-Path $p)) { $gsudoPath = $p; break }
@@ -178,9 +180,9 @@ if ($isAlreadyAdmin) {
 
 # Final cleanup
 Write-Host "Nettoyage des fichiers temporaires..."
-foreach ($font in $fonts) {
-    if (Test-Path "$env:TEMP\$font") { Remove-Item -Path "$env:TEMP\$font" -Recurse -Force }
-}
+{{- range .packages.nerdfonts -}}
+    if (Test-Path "$env:TEMP\{{ . }}") { Remove-Item -Path "$env:TEMP\{{ . }}" -Recurse -Force }
+{{- end -}}
 Remove-Item -Path $globalBatchFilePath -ErrorAction SilentlyContinue
 Write-Host "--- INSTALLATION TERMINÉE ---"
 {{- end -}}

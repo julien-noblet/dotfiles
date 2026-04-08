@@ -46,3 +46,4 @@ packages:
     - "ZedIndustries.Zed"
     - "junegunn.fzf"
     - "zig.zig"
+    - "tree-sitter.tree-sitter-cli"

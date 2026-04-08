@@ -127,3 +127,6 @@ asdf:
         - 0.22.1
       hosts:
         - victus
+    - name: tree-sitter
+      versions: 
+        - 0.26.8

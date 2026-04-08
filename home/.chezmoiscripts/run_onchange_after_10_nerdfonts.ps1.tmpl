@@ -14,8 +14,8 @@ try {
 $globalBatchCommands = @("@echo off")
 
 $count = 0
-$totalFonts = "{{- len .packages.nerdfonts -}}"
-{{- range .packages.nerdfonts -}}
+$totalFonts = "{{- len .fonts.nerdfonts -}}"
+{{- range .fonts.nerdfonts -}}
     $font = "{{ . }}"
     $count++
     $percent = [math]::Floor(($count / $totalFonts) * 100)
@@ -93,7 +93,7 @@ $globalBatchCommands = @("@echo off")
 
 # Utiliser une variable temporaire pour l'index car indexOf peut poser problème dans certains contextes
 $count = 0
-{{- range .packages.nerdfonts -}}
+{{- range .fonts.nerdfonts -}}
     $font = "{{ . }}"
     $count++
     $percent = [math]::Floor(($count / $totalFonts) * 100)
@@ -180,7 +180,7 @@ if ($isAlreadyAdmin) {
 
 # Final cleanup
 Write-Host "Nettoyage des fichiers temporaires..."
-{{- range .packages.nerdfonts -}}
+{{- range .fonts.nerdfonts -}}
     if (Test-Path "$env:TEMP\{{ . }}") { Remove-Item -Path "$env:TEMP\{{ . }}" -Recurse -Force }
 {{- end -}}
 Remove-Item -Path $globalBatchFilePath -ErrorAction SilentlyContinue

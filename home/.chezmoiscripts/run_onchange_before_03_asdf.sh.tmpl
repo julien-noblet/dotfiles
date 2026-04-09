@@ -11,8 +11,8 @@
 {{-   $_ := set $current_versions $tool $version -}}
 {{- end -}}
 
-{{- $asdf_bin }} plugin update --all
-{{- $plugins := output ( $asdf_bin ) "plugin" "list" | splitList "\n" | compact -}}
+{{ $asdf_bin }} plugin update --all
+{{ $plugins := output ( $asdf_bin ) "plugin" "list" | splitList "\n" | compact -}}
 
 {{- range .asdf.tools -}}
 {{-   $install := true -}}
@@ -24,14 +24,14 @@
 {{-     $tool_name := .name -}}
 
 {{- /* install plugins */ -}}
-{{-     if has $tool_name $plugins | not -}}
+{{-     if has $tool_name $plugins | not }}
 		  echo "installing {{ $tool_name }} plugin"
 		  {{ $asdf_bin }} plugin add {{ $tool_name }} {{ if hasKey . "plugin_url" }}{{ .plugin_url | quote }}{{- end -}}
 {{-     end -}}
 
 {{- /* install versions if not already installed */ -}}
 {{-     range .versions -}}
-{{-       if eq (get $current_versions $tool_name) . | not -}}
+{{-       if eq (get $current_versions $tool_name) . | not }}
 		  {{ $asdf_bin }} install {{ $tool_name }} {{ . }}
 {{-       end -}}
 {{-     end -}}
@@ -54,7 +54,7 @@
 {{- range keys $current_versions }}
 {{-   $tool := . -}}
 {{-   if has $tool $asdf_tools | not }}
-{{-     range output ( $asdf_bin ) "list" $tool | trim | trimPrefix "*" | splitList " " | compact -}}
+{{-     range output "sh" "-c" (join " " (list  $asdf_bin "list"  $tool  "|| true" )) | trim | trimPrefix "*" | splitList " " | compact }}
 			echo "found installed tool {{ $tool }} with version {{ . }} but it's not in the list of tools to install, removing it"
 			{{ $asdf_bin }} uninstall {{ $tool }} {{ . }}
 {{-     end -}}

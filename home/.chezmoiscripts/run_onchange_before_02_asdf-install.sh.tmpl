@@ -18,7 +18,7 @@ function install_asdf() {
 }
 
 # install asdf
-{{- if (lstat $asdf_basepath).isDir | not }}
+{{- if (lstat $asdf_basepath) | not }}
 {{-   if exec "mkdir" "-p" $asdf_basepath | not }}
 {{-     warnf "failed to create directory %s" $asdf_basepath }}
 {{-   end -}}

@@ -5,14 +5,14 @@
 {{ $asdf_bin :=  lookPath  "asdf" | default (joinPath $asdf_basepath "bin" "asdf")  -}}
 
 {{- $current_versions := dict -}}
-{{- range output ( $asdf_bin ) "current" "--no-header" | splitList "\n" | compact -}}
+{{- range output "sh" "-c" (join " " (list  $asdf_bin "current" "--no-header" "|| true")) | splitList "\n" | compact -}}
 {{-   $tool := splitList " " . | first -}}
 {{-   $version := splitList " " . | compact | rest | first -}}
 {{-   $_ := set $current_versions $tool $version -}}
 {{- end -}}
 
 {{ $asdf_bin }} plugin update --all
-{{ $plugins := output ( $asdf_bin ) "plugin" "list" | splitList "\n" | compact -}}
+{{ $plugins := output "sh" "-c" (join " " (list  $asdf_bin "plugin" "list" "|| true")) | splitList "\n" | compact -}}
 
 {{- range .asdf.tools -}}
 {{-   $install := true -}}

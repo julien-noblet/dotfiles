@@ -1,69 +1,103 @@
 {{- if eq .chezmoi.os "linux" -}}
-#!/bin/bash
+#!{{ lookPath "bash" }}
+
+{{ $asdf_basepath := joinPath .chezmoi.homeDir ".asdf" -}}
+{{ $asdf_bin :=  lookPath  "asdf" | default (joinPath $asdf_basepath "bin" "asdf")  -}}
 
 # function install_asdf
 
 function install_asdf() {
-	base_url="https://github.com/asdf-vm/asdf/releases/download/"
-	rm -f asdf-v{{ .asdf.version }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz*
-	wget "${base_url}v{{ .asdf.version }}/asdf-v{{ .asdf.version }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
-	tar -xvzf asdf-v{{ .asdf.version }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz -C ~/.asdf/bin
-	# clean up
-	rm -f asdf-v{{ .asdf.version }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz*
-	export ASDF_DATA_DIR={{ .chezmoi.config.destDir }}/.asdf
-	export PATH="$ASDF_DATA_DIR/shims:$ASDF_DATA_DIR/bin:$PATH"
+  base_url="https://github.com/asdf-vm/asdf/releases/download/"
+    rm -f asdf-v{{ .asdf.version }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz*
+    wget "${base_url}v{{ .asdf.version }}/asdf-v{{ .asdf.version }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
+    tar -xvzf asdf-v{{ .asdf.version }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz -C ~/.asdf/bin
+# clean up
+    rm -f asdf-v{{ .asdf.version }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz*
+    export ASDF_DATA_DIR={{ .chezmoi.config.destDir }}/.asdf
+    export PATH="$ASDF_DATA_DIR/shims:$ASDF_DATA_DIR/bin:$PATH"
 }
 
 # install asdf
-# if ~/.asdf not exist then install asdf
-if [ ! -d ~/.asdf ]; then
-	mkdir -p ~/.asdf/bin
-fi
-# if ~/.asdf/bin/asdf not exist or not executable then install asdf
-if [ ! -x ~/.asdf/bin/asdf ]; then
+{{- if ($asdf_basepath | lstat).isDir | not }}
+{{-   if exec "mkdir" "-p" $asdf_basepath | not }}
+{{-     warnf "failed to create directory %s" $asdf_basepath }}
+{{-   end -}}
+{{- end -}}
+
+{{- if not (and (lstat $asdf_bin) (isExecutable $asdf_bin)) }}
 	install_asdf
-fi
-# if asdf version is not the right one then install asdf
-if [ "$(~/.asdf/bin/asdf --version | cut -d ' ' -f 3)" != "v{{ .asdf.version }}" ]; then
+{{- else }}
+{{- /* if asdf version is not the right one then install asdf */ -}}
+{{-   if not (eq (list "v" $.asdf.version | join "") (splitList " " (output $asdf_bin "version" ) | first)) }}
 	install_asdf
-fi
+{{-   else }}
+	echo "asdf is already installed and up to date"
+{{-   end -}}
+{{- end -}}
 
-{{ range .asdf.tools }}
-{{ $install := true }}
-{{ if hasKey . "hosts" }}
-  {{ $install = (has $.chezmoi.hostname .hosts) }}
-{{ end }}
+{{- $current_versions := dict -}}
+{{- range output ( $asdf_bin ) "current" "--no-header" | splitList "\n" | compact -}}
+{{-   $tool := splitList " " . | first -}}
+{{-   $version := splitList " " . | compact | rest | first -}}
+{{-   $_ := set $current_versions $tool $version -}}
+{{- end -}}
 
-{{ if $install }}
-{{ $tool_name := .name }}
+{{- $asdf_bin }} plugin update --all
+{{- $plugins := output ( $asdf_bin ) "plugin" "list" | splitList "\n" | compact -}}
 
-# install plugins
-# if .plugin_url does not exist then use ""
-if [ -z "$(~/.asdf/bin/asdf plugin list | grep {{ $tool_name }})" ]; then
-	echo "installing {{ $tool_name }} plugin"
-	~/.asdf/bin/asdf plugin add {{ $tool_name }} {{ if hasKey . "plugin_url" }}{{ .plugin_url | quote }}{{ else }}""{{ end }}
-else
-	# if plugin is already installed then update it
-	~/.asdf/bin/asdf plugin update {{ $tool_name }}
-fi
+{{- range .asdf.tools -}}
+{{-   $install := true -}}
+{{-   if hasKey . "hosts" -}}
+{{-     $install = (has $.chezmoi.hostname .hosts) -}}
+{{-   end -}}
 
-# install tools
-{{ range .versions }}
-echo "installing {{ $tool_name }} {{ . }}"
-if [ -z "$(~/.asdf/bin/asdf list {{ $tool_name }} | grep {{ . }})" ]; then
-	~/.asdf/bin/asdf install {{ $tool_name }} {{ . }}
-fi
-{{ end }}
+{{-   if $install -}}
+{{-     $tool_name := .name -}}
 
-# cleanup old versions
-SPECIFIED_VERSIONS=" {{ range .versions }}{{ . }} {{ end }}"
-for installed_version in $(~/.asdf/bin/asdf list {{ $tool_name }} | sed -e s/\*//); do
-    if [[ ! $SPECIFIED_VERSIONS =~ " $installed_version " ]]; then
-        echo "removing {{ $tool_name }} $installed_version"
-        ~/.asdf/bin/asdf uninstall {{ $tool_name }} $installed_version
-    fi
-done
+{{- /* install plugins */ -}}
+{{-     if has $tool_name $plugins | not -}}
+		  echo "installing {{ $tool_name }} plugin"
+		  {{ $asdf_bin }} plugin add {{ $tool_name }} {{ if hasKey . "plugin_url" }}{{ .plugin_url | quote }}{{- end -}}
+{{-     end -}}
 
-{{ end }}
-{{ end }}
-{{- end }}
+{{- /* install versions if not already installed */ -}}
+{{-     range .versions -}}
+{{-       if eq (get $current_versions $tool_name) . | not -}}
+		  {{ $asdf_bin }} install {{ $tool_name }} {{ . }}
+{{-       end -}}
+{{-     end -}}
+
+{{- /* cleanup old versions */ -}}
+
+{{-     $versions := .versions -}}
+{{-     range output ( $asdf_bin ) "list" $tool_name | splitList "\n" | compact -}}
+{{-       $version := .  | trim | trimPrefix "*" -}}
+{{-       if has $version $versions | not -}}
+			echo "found installed version {{ $version }} for {{ $tool_name }} !" 
+			echo "removing {{ $tool_name }} {{ $version }}"
+			{{ $asdf_bin }} uninstall {{ $tool_name }} {{ $version }}
+{{-       end -}}
+{{-     end -}}
+{{-   end -}}
+{{- end -}}
+
+{{- $asdf_tools := .asdf.tools | jq ".[] | .name" -}}
+{{- range keys $current_versions }}
+{{-   $tool := . -}}
+{{-   if has $tool $asdf_tools | not }}
+{{-     range output ( $asdf_bin ) "list" $tool | trim | trimPrefix "*" | splitList " " | compact -}}
+			echo "found installed tool {{ $tool }} with version {{ . }} but it's not in the list of tools to install, removing it"
+			{{ $asdf_bin }} uninstall {{ $tool }} {{ . }}
+{{-     end -}}
+{{-   end -}}
+{{- end -}}
+
+{{- /* cleanup plugins that are not in the list of tools to install */ -}}
+{{- range $plugins }}
+{{-   if has . $asdf_tools | not }}
+		echo "found installed plugin {{ . }} but it's not in the list of tools to install, removing it"
+		{{ $asdf_bin }} plugin remove {{ . }}
+{{-   end -}}
+{{- end -}}
+
+{{- end -}}

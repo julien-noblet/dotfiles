@@ -4,6 +4,8 @@
 {{ $asdf_basepath := joinPath .chezmoi.homeDir ".asdf" -}}
 {{ $asdf_bin :=  lookPath  "asdf" | default (joinPath $asdf_basepath "bin" "asdf")  -}}
 
+{{ if  and (lstat $asdf_bin) (isExecutable $asdf_bin) }}
+
 {{- $current_versions := dict -}}
 {{- range output "sh" "-c" (join " " (list  $asdf_bin "current" "--no-header" "|| true")) | splitList "\n" | compact -}}
 {{-   $tool := splitList " " . | first -}}
@@ -69,4 +71,5 @@
 {{-   end -}}
 {{- end -}}
 
+{{- end -}}
 {{- end -}}

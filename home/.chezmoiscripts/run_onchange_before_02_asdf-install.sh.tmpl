@@ -4,6 +4,14 @@
 {{ $asdf_basepath := joinPath .chezmoi.homeDir ".asdf" | default "$HOME/.asdf" -}}
 {{ $asdf_bin :=  lookPath  "asdf" | default (joinPath $asdf_basepath "bin" "asdf")  -}}
 
+{{ if not (and (lstat $asdf_bin) (isExecutable $asdf_bin)) }}
+  echo "asdf is not installed, installing it"
+  export ASDF_DATA_DIR={{ .chezmoi.config.destDir }}/.asdf
+  export PATH="$ASDF_DATA_DIR/shims:$ASDF_DATA_DIR/bin:$PATH"
+{{ else }}
+  echo "asdf is already installed, checking if it's up to date"
+
+
 # function install_asdf
 
 function install_asdf() {
@@ -19,7 +27,8 @@ function install_asdf() {
 
 # install asdf
 {{- if (lstat $asdf_basepath) | not }}
-{{-   if exec "mkdir" "-p" $asdf_basepath | not }}
+	mkdir -p {{ $asdf_basepath }}
+{{-   if not (lstat $asdf_basepath) }}
 {{-     warnf "failed to create directory %s" $asdf_basepath }}
 {{-   end -}}
 {{- end -}}
@@ -36,3 +45,4 @@ function install_asdf() {
 {{- end -}}
 
 {{- end -}}
+{{ end -}}

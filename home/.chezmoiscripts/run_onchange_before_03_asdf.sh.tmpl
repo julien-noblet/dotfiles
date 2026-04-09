@@ -39,15 +39,13 @@
 {{- /* cleanup old versions */ -}}
 
 {{-     $versions := .versions }}
-{{-     if has $tool_name (keys $current_versions) | not  -}}
-{{-       range output ( $asdf_bin ) "list" $tool_name | splitList "\n" | compact | default (list) -}}
+{{-       range output "sh" "-c" (join " " (list  $asdf_bin "list"  $tool_name  "|| true" )) | splitList "\n" | compact | default (list) -}}
 {{-         $version := .  | trim | trimPrefix "*" -}}
-{{-         if has $version $versions | not -}}
+{{-         if has $version $versions | not }}
 				echo "found installed version {{ $version }} for {{ $tool_name }} !" 
 				echo "removing {{ $tool_name }} {{ $version }}"
 				{{ $asdf_bin }} uninstall {{ $tool_name }} {{ $version }}
 {{-         end -}}
-{{-       end -}}
 {{-     end -}}
 {{-   end -}}
 {{- end -}}

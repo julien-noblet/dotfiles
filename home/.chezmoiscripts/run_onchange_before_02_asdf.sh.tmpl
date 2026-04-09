@@ -70,7 +70,7 @@ function install_asdf() {
 {{- /* cleanup old versions */ -}}
 
 {{-     $versions := .versions -}}
-{{-     range output ( $asdf_bin ) "list" $tool_name | splitList "\n" | compact -}}
+{{-     range output ( $asdf_bin ) "list" $tool_name | splitList "\n" | compact | default (list) -}}
 {{-       $version := .  | trim | trimPrefix "*" -}}
 {{-       if has $version $versions | not -}}
 			echo "found installed version {{ $version }} for {{ $tool_name }} !" 

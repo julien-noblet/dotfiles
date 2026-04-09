@@ -4,37 +4,6 @@
 {{ $asdf_basepath := joinPath .chezmoi.homeDir ".asdf" -}}
 {{ $asdf_bin :=  lookPath  "asdf" | default (joinPath $asdf_basepath "bin" "asdf")  -}}
 
-# function install_asdf
-
-function install_asdf() {
-  base_url="https://github.com/asdf-vm/asdf/releases/download/"
-    rm -f asdf-v{{ .asdf.version }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz*
-    wget "${base_url}v{{ .asdf.version }}/asdf-v{{ .asdf.version }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
-    tar -xvzf asdf-v{{ .asdf.version }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz -C ~/.asdf/bin
-# clean up
-    rm -f asdf-v{{ .asdf.version }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz*
-    export ASDF_DATA_DIR={{ .chezmoi.config.destDir }}/.asdf
-    export PATH="$ASDF_DATA_DIR/shims:$ASDF_DATA_DIR/bin:$PATH"
-}
-
-# install asdf
-{{- if ($asdf_basepath | lstat).isDir | not }}
-{{-   if exec "mkdir" "-p" $asdf_basepath | not }}
-{{-     warnf "failed to create directory %s" $asdf_basepath }}
-{{-   end -}}
-{{- end -}}
-
-{{- if not (and (lstat $asdf_bin) (isExecutable $asdf_bin)) }}
-	install_asdf
-{{- else }}
-{{- /* if asdf version is not the right one then install asdf */ -}}
-{{-   if not (eq (list "v" $.asdf.version | join "") (splitList " " (output $asdf_bin "version" ) | first)) }}
-	install_asdf
-{{-   else }}
-	echo "asdf is already installed and up to date"
-{{-   end -}}
-{{- end -}}
-
 {{- $current_versions := dict -}}
 {{- range output ( $asdf_bin ) "current" "--no-header" | splitList "\n" | compact -}}
 {{-   $tool := splitList " " . | first -}}
@@ -69,13 +38,15 @@ function install_asdf() {
 
 {{- /* cleanup old versions */ -}}
 
-{{-     $versions := .versions -}}
-{{-     range output ( $asdf_bin ) "list" $tool_name | splitList "\n" | compact | default (list) -}}
-{{-       $version := .  | trim | trimPrefix "*" -}}
-{{-       if has $version $versions | not -}}
-			echo "found installed version {{ $version }} for {{ $tool_name }} !" 
-			echo "removing {{ $tool_name }} {{ $version }}"
-			{{ $asdf_bin }} uninstall {{ $tool_name }} {{ $version }}
+{{-     $versions := .versions }}
+{{-     if has $tool_name (keys $current_versions) | not  -}}
+{{-       range output ( $asdf_bin ) "list" $tool_name | splitList "\n" | compact | default (list) -}}
+{{-         $version := .  | trim | trimPrefix "*" -}}
+{{-         if has $version $versions | not -}}
+				echo "found installed version {{ $version }} for {{ $tool_name }} !" 
+				echo "removing {{ $tool_name }} {{ $version }}"
+				{{ $asdf_bin }} uninstall {{ $tool_name }} {{ $version }}
+{{-         end -}}
 {{-       end -}}
 {{-     end -}}
 {{-   end -}}

@@ -1,7 +1,7 @@
 {{- if eq .chezmoi.os "linux" -}}
 #!{{ lookPath "bash" }}
 
-{{ $asdf_basepath := joinPath .chezmoi.homeDir ".asdf" -}}
+{{ $asdf_basepath := joinPath .chezmoi.homeDir ".asdf" | default "$HOME/.asdf" -}}
 {{ $asdf_bin :=  lookPath  "asdf" | default (joinPath $asdf_basepath "bin" "asdf")  -}}
 
 # function install_asdf
@@ -10,7 +10,7 @@ function install_asdf() {
   base_url="https://github.com/asdf-vm/asdf/releases/download/"
     rm -f asdf-v{{ .asdf.version }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz*
     wget "${base_url}v{{ .asdf.version }}/asdf-v{{ .asdf.version }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
-    tar -xvzf asdf-v{{ .asdf.version }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz -C ~/.asdf/bin
+    tar -xvzf asdf-v{{ .asdf.version }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz -C {{ $asdf_basepath }}/bin
 # clean up
     rm -f asdf-v{{ .asdf.version }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz*
     export ASDF_DATA_DIR={{ .chezmoi.config.destDir }}/.asdf

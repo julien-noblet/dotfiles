@@ -1,36 +1,34 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended"
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: [
+    'config:recommended',
   ],
-  "customManagers": [
+  customManagers: [
     {
-      "customType": "regex",
-      "fileMatch": [
-        "^home/\\.chezmoidata/asdf\\.yaml$"
+      customType: 'regex',
+      managerFilePatterns: [
+        '/^home/\\.chezmoidata/asdf\\.yaml$/',
       ],
-      "matchStrings": [
-        "name:\\s+(?<depName>[a-zA-Z0-9_-]+)\\n(?:\\s+github:\\s+(?<packageName>[a-zA-Z0-9/_-]+)\\n)?(?:\\s+(?:plugin_url|hosts):\\s+.*\\n)*\\s+versions:\\s+\\n\\s+-\\s+(?<currentValue>.*)"
+      matchStrings: [
+        'name:\\s+(?<depName>[a-zA-Z0-9_-]+)\\n(?:\\s+github:\\s+(?<packageName>[a-zA-Z0-9/_-]+)\\n)?(?:\\s+(?:plugin_url|hosts):\\s+.*\\n)*\\s+versions:\\s+\\n\\s+-\\s+(?<currentValue>.*)',
       ],
-      "datasourceTemplate": "github-releases",
-      "versioningTemplate": "semver"
-    }
+      datasourceTemplate: 'github-releases',
+      versioningTemplate: 'semver',
+    },
   ],
-  "packageRules": [
+  packageRules: [
     {
-      "matchUpdateTypes": [
-        "pin",
-        "digest"
+      matchUpdateTypes: [
+        'pin',
+        'digest',
       ],
-      "enabled": false
+      enabled: false,
     },
     {
-      "matchPackageNames": [
-        "golang/go"
+      matchPackageNames: [
+        'golang/go',
       ],
-      "versioning": "docker"
-    }
-  ]
+      versioning: 'docker',
+    },
+  ],
 }
-
-

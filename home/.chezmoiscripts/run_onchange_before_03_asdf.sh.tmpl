@@ -13,7 +13,7 @@
 {{-   $_ := set $current_versions $tool $version -}}
 {{- end -}}
 
-{{ $asdf_bin }} plugin update --all
+# {{ $asdf_bin }} plugin update --all
 {{ $plugins := output "sh" "-c" (join " " (list  $asdf_bin "plugin" "list" "|| true")) | splitList "\n" | compact -}}
 
 {{- range .asdf.tools -}}
@@ -34,6 +34,7 @@
 {{- /* install versions if not already installed */ -}}
 {{-     range .versions -}}
 {{-       if eq (get $current_versions $tool_name) . | not }}
+          {{ $asdf_bin }} plugins update {{ $tool_name }}
 		  {{ $asdf_bin }} install {{ $tool_name }} {{ . }}
 {{-       end -}}
 {{-     end -}}

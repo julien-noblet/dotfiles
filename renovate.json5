@@ -12,7 +12,7 @@
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "{{{depName}}}",
-      "lookupNameTemplate": "asdf-community/asdf-{{{depName}}}",
+      "packageNameTemplate": "asdf-community/asdf-{{{depName}}}",
       "versioningTemplate": "semver"
     }
   ],
@@ -20,116 +20,116 @@
     {
       "matchPackageNames": ["golang"],
       "matchDatasources": ["github-releases"],
-      "lookupName": "golang/go",
+      "packageName": "golang/go",
       "versioning": "docker"
     },
     {
       "matchPackageNames": ["nodejs"],
-      "lookupName": "nodejs/node"
+      "packageName": "nodejs/node"
     },
     {
       "matchPackageNames": ["rust"],
-      "lookupName": "rust-lang/rust"
+      "packageName": "rust-lang/rust"
     },
     {
       "matchPackageNames": ["github-cli"],
-      "lookupName": "cli/cli"
+      "packageName": "cli/cli"
     },
     {
       "matchPackageNames": ["neovim"],
-      "lookupName": "neovim/neovim"
+      "packageName": "neovim/neovim"
     },
     {
       "matchPackageNames": ["age"],
-      "lookupName": "FiloSottile/age"
+      "packageName": "FiloSottile/age"
     },
     {
       "matchPackageNames": ["bat"],
-      "lookupName": "sharkdp/bat"
+      "packageName": "sharkdp/bat"
     },
     {
       "matchPackageNames": ["chezmoi"],
-      "lookupName": "twpayne/chezmoi"
+      "packageName": "twpayne/chezmoi"
     },
     {
       "matchPackageNames": ["hugo"],
-      "lookupName": "gohugoio/hugo"
+      "packageName": "gohugoio/hugo"
     },
     {
       "matchPackageNames": ["lazygit"],
-      "lookupName": "jesseduffield/lazygit"
+      "packageName": "jesseduffield/lazygit"
     },
     {
       "matchPackageNames": ["shellcheck"],
-      "lookupName": "koalaman/shellcheck"
+      "packageName": "koalaman/shellcheck"
     },
     {
       "matchPackageNames": ["shfmt"],
-      "lookupName": "mvdan/sh"
+      "packageName": "mvdan/sh"
     },
     {
       "matchPackageNames": ["upx"],
-      "lookupName": "upx/upx"
+      "packageName": "upx/upx"
     },
     {
       "matchPackageNames": ["yq"],
-      "lookupName": "mikefarah/yq"
+      "packageName": "mikefarah/yq"
     },
     {
       "matchPackageNames": ["gum"],
-      "lookupName": "charmbracelet/gum"
+      "packageName": "charmbracelet/gum"
     },
     {
       "matchPackageNames": ["starship"],
-      "lookupName": "starship/starship"
+      "packageName": "starship/starship"
     },
     {
       "matchPackageNames": ["helm"],
-      "lookupName": "helm/helm"
+      "packageName": "helm/helm"
     },
     {
       "matchPackageNames": ["kubectl"],
-      "lookupName": "kubernetes/kubectl"
+      "packageName": "kubernetes/kubectl"
     },
     {
       "matchPackageNames": ["terraform"],
-      "lookupName": "hashicorp/terraform"
+      "packageName": "hashicorp/terraform"
     },
     {
       "matchPackageNames": ["k9s"],
-      "lookupName": "derailed/k9s"
+      "packageName": "derailed/k9s"
     },
     {
       "matchPackageNames": ["kustomize"],
-      "lookupName": "kubernetes-sigs/kustomize"
+      "packageName": "kubernetes-sigs/kustomize"
     },
     {
       "matchPackageNames": ["argocd"],
-      "lookupName": "argoproj/argo-cd"
+      "packageName": "argoproj/argo-cd"
     },
     {
       "matchPackageNames": ["golangci-lint"],
-      "lookupName": "golangci/golangci-lint"
+      "packageName": "golangci/golangci-lint"
     },
     {
       "matchPackageNames": ["gofumpt"],
-      "lookupName": "mvdan/gofumpt"
+      "packageName": "mvdan/gofumpt"
     },
     {
       "matchPackageNames": ["bun"],
-      "lookupName": "oven-sh/bun"
+      "packageName": "oven-sh/bun"
     },
     {
       "matchPackageNames": ["trivy"],
-      "lookupName": "aquasecurity/trivy"
+      "packageName": "aquasecurity/trivy"
     },
     {
       "matchPackageNames": ["popeye"],
-      "lookupName": "derailed/popeye"
+      "packageName": "derailed/popeye"
     },
     {
       "matchPackageNames": ["tree-sitter"],
-      "lookupName": "tree-sitter/tree-sitter"
+      "packageName": "tree-sitter/tree-sitter"
     }
   ]
 }

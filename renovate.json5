@@ -1,0 +1,135 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": ["^home/\\.chezmoidata/asdf\\.yaml$"],
+      "matchStrings": [
+        "-(?:\\s+)name:\\s+(?<depName>[a-zA-Z0-9_-]+)\\n(?:\\s+(?:plugin_url|hosts):\\s+.*\\n)*\\s+versions:\\s+\\n\\s+-\\s+(?<currentValue>.*)"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "{{{depName}}}",
+      "lookupNameTemplate": "asdf-community/asdf-{{{depName}}}",
+      "versioningTemplate": "semver"
+    }
+  ],
+  "packageRules": [
+    {
+      "matchPackageNames": ["golang"],
+      "matchDatasources": ["github-releases"],
+      "lookupName": "golang/go",
+      "versioning": "docker"
+    },
+    {
+      "matchPackageNames": ["nodejs"],
+      "lookupName": "nodejs/node"
+    },
+    {
+      "matchPackageNames": ["rust"],
+      "lookupName": "rust-lang/rust"
+    },
+    {
+      "matchPackageNames": ["github-cli"],
+      "lookupName": "cli/cli"
+    },
+    {
+      "matchPackageNames": ["neovim"],
+      "lookupName": "neovim/neovim"
+    },
+    {
+      "matchPackageNames": ["age"],
+      "lookupName": "FiloSottile/age"
+    },
+    {
+      "matchPackageNames": ["bat"],
+      "lookupName": "sharkdp/bat"
+    },
+    {
+      "matchPackageNames": ["chezmoi"],
+      "lookupName": "twpayne/chezmoi"
+    },
+    {
+      "matchPackageNames": ["hugo"],
+      "lookupName": "gohugoio/hugo"
+    },
+    {
+      "matchPackageNames": ["lazygit"],
+      "lookupName": "jesseduffield/lazygit"
+    },
+    {
+      "matchPackageNames": ["shellcheck"],
+      "lookupName": "koalaman/shellcheck"
+    },
+    {
+      "matchPackageNames": ["shfmt"],
+      "lookupName": "mvdan/sh"
+    },
+    {
+      "matchPackageNames": ["upx"],
+      "lookupName": "upx/upx"
+    },
+    {
+      "matchPackageNames": ["yq"],
+      "lookupName": "mikefarah/yq"
+    },
+    {
+      "matchPackageNames": ["gum"],
+      "lookupName": "charmbracelet/gum"
+    },
+    {
+      "matchPackageNames": ["starship"],
+      "lookupName": "starship/starship"
+    },
+    {
+      "matchPackageNames": ["helm"],
+      "lookupName": "helm/helm"
+    },
+    {
+      "matchPackageNames": ["kubectl"],
+      "lookupName": "kubernetes/kubectl"
+    },
+    {
+      "matchPackageNames": ["terraform"],
+      "lookupName": "hashicorp/terraform"
+    },
+    {
+      "matchPackageNames": ["k9s"],
+      "lookupName": "derailed/k9s"
+    },
+    {
+      "matchPackageNames": ["kustomize"],
+      "lookupName": "kubernetes-sigs/kustomize"
+    },
+    {
+      "matchPackageNames": ["argocd"],
+      "lookupName": "argoproj/argo-cd"
+    },
+    {
+      "matchPackageNames": ["golangci-lint"],
+      "lookupName": "golangci/golangci-lint"
+    },
+    {
+      "matchPackageNames": ["gofumpt"],
+      "lookupName": "mvdan/gofumpt"
+    },
+    {
+      "matchPackageNames": ["bun"],
+      "lookupName": "oven-sh/bun"
+    },
+    {
+      "matchPackageNames": ["trivy"],
+      "lookupName": "aquasecurity/trivy"
+    },
+    {
+      "matchPackageNames": ["popeye"],
+      "lookupName": "derailed/popeye"
+    },
+    {
+      "matchPackageNames": ["tree-sitter"],
+      "lookupName": "tree-sitter/tree-sitter"
+    }
+  ]
+}

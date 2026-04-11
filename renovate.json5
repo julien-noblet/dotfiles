@@ -11,10 +11,15 @@
         "-(?:\\s+)name:\\s+(?<depName>[a-zA-Z0-9_-]+)\\n(?:\\s+(?:plugin_url|hosts):\\s+.*\\n)*\\s+versions:\\s+\\n\\s+-\\s+(?<currentValue>.*)"
       ],
       "datasourceTemplate": "github-releases",
-      "depNameTemplate": "{{{depName}}}"
+      "depNameTemplate": "{{{depName}}}",
+      "versioningTemplate": "semver"
     }
   ],
   "packageRules": [
+    {
+      "matchUpdateTypes": ["pin", "digest"],
+      "enabled": false
+    },
     {
       "matchPackageNames": ["golang"],
       "packageName": "golang/go",

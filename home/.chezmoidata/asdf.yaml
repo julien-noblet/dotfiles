@@ -69,7 +69,7 @@ asdf:
     - name: shfmt
       github: mvdan/sh
       versions: 
-        - 3.13.0
+        - 3.13.1
       hosts:
         - victus
     - name: upx

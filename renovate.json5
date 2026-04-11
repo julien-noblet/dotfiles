@@ -6,44 +6,32 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": ["^home/\\.chezmoidata/asdf\\.yaml$"],
+      "fileMatch": [
+        "^home/\\.chezmoidata/asdf\\.yaml$"
+      ],
       "matchStrings": [
         "-(?:\\s+)name:\\s+(?<depName>[a-zA-Z0-9_-]+)\\n(?:\\s+(?:plugin_url|hosts):\\s+.*\\n)*\\s+versions:\\s+\\n\\s+-\\s+(?<currentValue>.*)"
       ],
       "datasourceTemplate": "github-releases",
-      "depNameTemplate": "{{{depName}}}",
+      "packageNameTemplate": "{{{depName}}}",
       "versioningTemplate": "semver"
     }
   ],
   "packageRules": [
     {
-      "matchUpdateTypes": ["pin", "digest"],
+      "matchUpdateTypes": [
+        "pin",
+        "digest"
+      ],
       "enabled": false
-    },
-    {
-      "matchPackageNames": ["golang"],
-      "packageName": "golang/go",
-      "versioning": "docker"
-    },
-    {
-      "matchPackageNames": ["nodejs"],
-      "packageName": "nodejs/node"
-    },
-    {
-      "matchPackageNames": ["rust"],
-      "packageName": "rust-lang/rust"
-    },
-    {
-      "matchPackageNames": ["github-cli"],
-      "packageName": "cli/cli"
-    },
-    {
-      "matchPackageNames": ["neovim"],
-      "packageName": "neovim/neovim"
     },
     {
       "matchPackageNames": ["age"],
       "packageName": "FiloSottile/age"
+    },
+    {
+      "matchPackageNames": ["rust"],
+      "packageName": "rust-lang/rust"
     },
     {
       "matchPackageNames": ["bat"],
@@ -52,6 +40,15 @@
     {
       "matchPackageNames": ["chezmoi"],
       "packageName": "twpayne/chezmoi"
+    },
+    {
+      "matchPackageNames": ["github-cli"],
+      "packageName": "cli/cli"
+    },
+    {
+      "matchPackageNames": ["golang"],
+      "packageName": "golang/go",
+      "versioning": "docker"
     },
     {
       "matchPackageNames": ["hugo"],
@@ -64,6 +61,14 @@
     {
       "matchPackageNames": ["lsd"],
       "packageName": "lsd-rs/lsd"
+    },
+    {
+      "matchPackageNames": ["neovim"],
+      "packageName": "neovim/neovim"
+    },
+    {
+      "matchPackageNames": ["nodejs"],
+      "packageName": "nodejs/node"
     },
     {
       "matchPackageNames": ["rclone"],
@@ -143,3 +148,4 @@
     }
   ]
 }
+

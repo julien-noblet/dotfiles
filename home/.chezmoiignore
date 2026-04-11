@@ -8,8 +8,6 @@
 .gitconfig
 .kube/config
 .ssh/id_rsa
-blocky/docker-compose/.env
-blocky/docker-compose/blocky/config.yml
 printer_data/config/telegram.conf
 {{ end }}
 

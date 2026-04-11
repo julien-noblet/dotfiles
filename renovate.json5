@@ -30,11 +30,5 @@
       ],
       versioning: 'go',
     },
-    {
-      matchPackageNames: [
-        'golang/go',
-      ],
-      versioning: 'go',
-    },
   ],
 }

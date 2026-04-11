@@ -26,9 +26,8 @@
     },
     {
       matchPackageNames: [
-        'golang',
+        'golang/go',
       ],
-      packageName: 'golang/go',
       versioning: 'docker',
     },
     {

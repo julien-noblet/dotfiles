@@ -34,7 +34,7 @@
 {{- /* install versions if not already installed */ -}}
 {{-     range .versions -}}
 {{-       if eq (get $current_versions $tool_name) . | not }}
-          {{ $asdf_bin }} plugins update {{ $tool_name }}
+          {{ $asdf_bin }} plugin update {{ $tool_name }}
 		  {{ $asdf_bin }} install {{ $tool_name }} {{ . }}
 {{-       end -}}
 {{-     end -}}

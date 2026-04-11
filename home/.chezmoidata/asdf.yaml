@@ -25,7 +25,7 @@ asdf:
         - victus
     - name: hugo
       versions: 
-        - 0.159.1
+        - 0.160.1
       hosts:
         - victus
     - name: lazygit

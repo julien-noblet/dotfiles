@@ -93,7 +93,7 @@ asdf:
     - name: helm
       github: helm/helm
       versions: 
-        - 4.1.3
+        - 4.1.4
       hosts:
         - victus
     - name: kubectl

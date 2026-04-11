@@ -11,15 +11,12 @@
         "-(?:\\s+)name:\\s+(?<depName>[a-zA-Z0-9_-]+)\\n(?:\\s+(?:plugin_url|hosts):\\s+.*\\n)*\\s+versions:\\s+\\n\\s+-\\s+(?<currentValue>.*)"
       ],
       "datasourceTemplate": "github-releases",
-      "depNameTemplate": "{{{depName}}}",
-      "packageNameTemplate": "asdf-community/asdf-{{{depName}}}",
-      "versioningTemplate": "semver"
+      "depNameTemplate": "{{{depName}}}"
     }
   ],
   "packageRules": [
     {
       "matchPackageNames": ["golang"],
-      "matchDatasources": ["github-releases"],
       "packageName": "golang/go",
       "versioning": "docker"
     },
@@ -58,6 +55,14 @@
     {
       "matchPackageNames": ["lazygit"],
       "packageName": "jesseduffield/lazygit"
+    },
+    {
+      "matchPackageNames": ["lsd"],
+      "packageName": "lsd-rs/lsd"
+    },
+    {
+      "matchPackageNames": ["rclone"],
+      "packageName": "rclone/rclone"
     },
     {
       "matchPackageNames": ["shellcheck"],

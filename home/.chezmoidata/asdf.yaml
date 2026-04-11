@@ -159,4 +159,4 @@ asdf:
     - name: tree-sitter
       github: tree-sitter/tree-sitter
       versions: 
-        - 0.26.8
+        - v1.3.1

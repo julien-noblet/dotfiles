@@ -2,131 +2,161 @@ asdf:
   version: 0.18.1
   tools:
     - name: age
+      github: FiloSottile/age
       versions: 
         - 1.3.1
     - name: rust
+      github: rust-lang/rust
       versions: 
         - 1.94.1
     - name: bat
+      github: sharkdp/bat
       versions: 
         - 0.26.1
     - name: chezmoi
+      github: twpayne/chezmoi
       versions: 
         - 2.70.1
     - name: github-cli
+      github: cli/cli
       versions: 
         - 2.89.0
       hosts:
         - victus
     - name: golang
+      github: golang/go
       versions: 
         - 1.26.2
       hosts:
         - victus
     - name: hugo
+      github: gohugoio/hugo
       versions: 
         - 0.160.1
       hosts:
         - victus
     - name: lazygit
+      github: jesseduffield/lazygit
       versions: 
         - 0.60.0
       hosts:
         - victus
     - name: lsd
+      github: lsd-rs/lsd
       plugin_url: https://github.com/ossareh/asdf-lsd.git
       versions: 
         - 1.2.0
     - name: neovim
+      github: neovim/neovim
       versions: 
         - 0.12.0
     - name: nodejs
+      github: nodejs/node
       versions: 
         - 25.8.2
       hosts:
         - victus
     - name: rclone
+      github: rclone/rclone
       versions: 
         - 1.73.3
     - name: shellcheck
+      github: koalaman/shellcheck
       versions: 
         - 0.11.0
       hosts:
         - victus
     - name: shfmt
+      github: mvdan/sh
       versions: 
         - 3.13.0
       hosts:
         - victus
     - name: upx
+      github: upx/upx
       versions: 
         - 5.1.1
       hosts:
         - victus
     - name: yq
+      github: mikefarah/yq
       versions: 
         - 4.52.5
     - name: gum
+      github: charmbracelet/gum
       versions: 
         - 0.17.0
     - name: starship
+      github: starship/starship
       versions: 
         - 1.24.2
     - name: helm
+      github: helm/helm
       versions: 
         - 4.1.3
       hosts:
         - victus
     - name: kubectl
+      github: kubernetes/kubectl
       versions: 
         - 1.35.3
       hosts:
         - victus
     - name: terraform
+      github: hashicorp/terraform
       versions: 
         - 1.14.8
       hosts:
         - victus
     - name: k9s
+      github: derailed/k9s
       versions: 
         - 0.50.18
       hosts:
         - victus
     - name: kustomize
+      github: kubernetes-sigs/kustomize
       versions: 
         - 5.8.1
       hosts:
         - victus
     - name: argocd
+      github: argoproj/argo-cd
       versions: 
         - 3.3.6
       hosts:
         - victus
     - name: golangci-lint
+      github: golangci/golangci-lint
       versions: 
         - 2.11.4
       hosts:
         - victus
     - name: gofumpt
+      github: mvdan/gofumpt
       versions: 
         - 0.9.2
       hosts:
         - victus
     - name: bun
+      github: oven-sh/bun
       versions: 
         - 1.3.11
       hosts:
         - victus
     - name: trivy
+      github: aquasecurity/trivy
       versions: 
         - 0.69.3
       hosts:
         - victus
     - name: popeye
+      github: derailed/popeye
       versions: 
         - 0.22.1
       hosts:
         - victus
     - name: tree-sitter
+      github: tree-sitter/tree-sitter
       versions: 
         - 0.26.8

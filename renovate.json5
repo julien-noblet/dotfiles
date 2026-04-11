@@ -10,10 +10,9 @@
         "^home/\\.chezmoidata/asdf\\.yaml$"
       ],
       "matchStrings": [
-        "-(?:\\s+)name:\\s+(?<depName>[a-zA-Z0-9_-]+)\\n(?:\\s+(?:plugin_url|hosts):\\s+.*\\n)*\\s+versions:\\s+\\n\\s+-\\s+(?<currentValue>.*)"
+        "name:\\s+(?<depName>[a-zA-Z0-9_-]+)\\n(?:(?:\\s+github:\\s+(?<packageName>[a-zA-Z0-9/_-]+))|(?:\\s+.*))?\\n(?:\\s+.*\\n)*\\s+versions:\\s+\\n\\s+-\\s+(?<currentValue>.*)"
       ],
       "datasourceTemplate": "github-releases",
-      "packageNameTemplate": "{{{depName}}}",
       "versioningTemplate": "semver"
     }
   ],
@@ -26,126 +25,12 @@
       "enabled": false
     },
     {
-      "matchPackageNames": ["age"],
-      "packageName": "FiloSottile/age"
-    },
-    {
-      "matchPackageNames": ["rust"],
-      "packageName": "rust-lang/rust"
-    },
-    {
-      "matchPackageNames": ["bat"],
-      "packageName": "sharkdp/bat"
-    },
-    {
-      "matchPackageNames": ["chezmoi"],
-      "packageName": "twpayne/chezmoi"
-    },
-    {
-      "matchPackageNames": ["github-cli"],
-      "packageName": "cli/cli"
-    },
-    {
-      "matchPackageNames": ["golang"],
-      "packageName": "golang/go",
+      "matchPackageNames": [
+        "golang/go"
+      ],
       "versioning": "docker"
-    },
-    {
-      "matchPackageNames": ["hugo"],
-      "packageName": "gohugoio/hugo"
-    },
-    {
-      "matchPackageNames": ["lazygit"],
-      "packageName": "jesseduffield/lazygit"
-    },
-    {
-      "matchPackageNames": ["lsd"],
-      "packageName": "lsd-rs/lsd"
-    },
-    {
-      "matchPackageNames": ["neovim"],
-      "packageName": "neovim/neovim"
-    },
-    {
-      "matchPackageNames": ["nodejs"],
-      "packageName": "nodejs/node"
-    },
-    {
-      "matchPackageNames": ["rclone"],
-      "packageName": "rclone/rclone"
-    },
-    {
-      "matchPackageNames": ["shellcheck"],
-      "packageName": "koalaman/shellcheck"
-    },
-    {
-      "matchPackageNames": ["shfmt"],
-      "packageName": "mvdan/sh"
-    },
-    {
-      "matchPackageNames": ["upx"],
-      "packageName": "upx/upx"
-    },
-    {
-      "matchPackageNames": ["yq"],
-      "packageName": "mikefarah/yq"
-    },
-    {
-      "matchPackageNames": ["gum"],
-      "packageName": "charmbracelet/gum"
-    },
-    {
-      "matchPackageNames": ["starship"],
-      "packageName": "starship/starship"
-    },
-    {
-      "matchPackageNames": ["helm"],
-      "packageName": "helm/helm"
-    },
-    {
-      "matchPackageNames": ["kubectl"],
-      "packageName": "kubernetes/kubectl"
-    },
-    {
-      "matchPackageNames": ["terraform"],
-      "packageName": "hashicorp/terraform"
-    },
-    {
-      "matchPackageNames": ["k9s"],
-      "packageName": "derailed/k9s"
-    },
-    {
-      "matchPackageNames": ["kustomize"],
-      "packageName": "kubernetes-sigs/kustomize"
-    },
-    {
-      "matchPackageNames": ["argocd"],
-      "packageName": "argoproj/argo-cd"
-    },
-    {
-      "matchPackageNames": ["golangci-lint"],
-      "packageName": "golangci/golangci-lint"
-    },
-    {
-      "matchPackageNames": ["gofumpt"],
-      "packageName": "mvdan/gofumpt"
-    },
-    {
-      "matchPackageNames": ["bun"],
-      "packageName": "oven-sh/bun"
-    },
-    {
-      "matchPackageNames": ["trivy"],
-      "packageName": "aquasecurity/trivy"
-    },
-    {
-      "matchPackageNames": ["popeye"],
-      "packageName": "derailed/popeye"
-    },
-    {
-      "matchPackageNames": ["tree-sitter"],
-      "packageName": "tree-sitter/tree-sitter"
     }
   ]
 }
+
 

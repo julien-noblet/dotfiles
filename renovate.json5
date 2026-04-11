@@ -10,7 +10,7 @@
         "^home/\\.chezmoidata/asdf\\.yaml$"
       ],
       "matchStrings": [
-        "name:\\s+(?<depName>[a-zA-Z0-9_-]+)\\n(?:(?:\\s+github:\\s+(?<packageName>[a-zA-Z0-9/_-]+))|(?:\\s+.*))?\\n(?:\\s+.*\\n)*\\s+versions:\\s+\\n\\s+-\\s+(?<currentValue>.*)"
+        "name:\\s+(?<depName>[a-zA-Z0-9_-]+)\\n(?:\\s+github:\\s+(?<packageName>[a-zA-Z0-9/_-]+)\\n)?(?:\\s+(?:plugin_url|hosts):\\s+.*\\n)*\\s+versions:\\s+\\n\\s+-\\s+(?<currentValue>.*)"
       ],
       "datasourceTemplate": "github-releases",
       "versioningTemplate": "semver"

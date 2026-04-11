@@ -26,15 +26,16 @@
     },
     {
       matchPackageNames: [
-        'golang/go',
+        'golang',
       ],
-      versioning: 'docker',
+      packageName: 'golang/go',
+      versioning: 'go',
     },
     {
       matchPackageNames: [
         'golang/go',
       ],
-      versioning: 'docker',
+      versioning: 'go',
     },
   ],
 }

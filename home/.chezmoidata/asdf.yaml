@@ -20,7 +20,7 @@ asdf:
         - victus
     - name: golang
       versions: 
-        - 1.26.1
+        - 1.26.2
       hosts:
         - victus
     - name: hugo

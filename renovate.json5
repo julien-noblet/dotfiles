@@ -26,13 +26,6 @@
     },
     {
       matchPackageNames: [
-        'golang',
-      ],
-      packageName: 'golang/go',
-      versioning: 'go',
-    },
-    {
-      matchPackageNames: [
         'golang/go',
       ],
       versioning: 'go',

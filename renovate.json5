@@ -24,11 +24,5 @@
       ],
       enabled: false,
     },
-    {
-      matchPackageNames: [
-        'go',
-      ],
-      versioning: 'go',
-    },
   ],
 }

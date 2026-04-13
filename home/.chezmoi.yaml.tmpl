@@ -7,6 +7,9 @@ age:
 
 {{- if eq $wsl true -}}
 verbose: true
+edit:
+    command: "code"
+    args: ["--wait"]
 {{- else -}}
 verbose: false
 {{ end }}

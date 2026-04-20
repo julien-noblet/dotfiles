@@ -96,12 +96,6 @@ asdf:
         - 4.1.4
       hosts:
         - victus
-    - name: kubectl
-      github: kubernetes/kubectl
-      versions: 
-        - 1.35.3
-      hosts:
-        - victus
     - name: terraform
       github: hashicorp/terraform
       versions: 

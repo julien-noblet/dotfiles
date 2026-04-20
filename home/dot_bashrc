@@ -168,4 +168,7 @@ if command -v starship; then
 	eval "$(starship init bash)"
 fi
 
+# OpenClaw Completion
+source "/home/julien/.openclaw/completions/openclaw.bash"
+
 #EOF

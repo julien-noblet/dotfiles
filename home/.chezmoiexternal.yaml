@@ -55,6 +55,18 @@
 #    type: git-repo
 #    url: "ssh://git@gitea.local:2222/julien/k8s-gitea.git"
 #    refreshPeriod: "24h"
+
+## tools
+# kubectl
+# curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+# install in /usr/local/bin and make it executable
+"bin/kubectl":
+    type: file
+    url: "https://dl.k8s.io/release/v1.35.0/bin/linux/amd64/kubectl"
+    refreshPeriod: "24h"
+    executable: true
+
+
 {{ end }}
 
 # Install ender3pro

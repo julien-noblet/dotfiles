@@ -89,7 +89,7 @@ asdf:
     - name: starship
       github: starship/starship
       versions: 
-        - 1.24.2
+        - 1.25.0
     - name: helm
       github: helm/helm
       versions: 

@@ -49,7 +49,7 @@ asdf:
     - name: neovim
       github: neovim/neovim
       versions: 
-        - 0.12.1
+        - 0.12.2
     - name: nodejs
       github: nodejs/node
       versions: 

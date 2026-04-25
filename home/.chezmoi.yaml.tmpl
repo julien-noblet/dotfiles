@@ -23,9 +23,9 @@ pager: ""
 
 
 {{/* Here we "export" the variables, so we can access them outside this file */ -}}
+{{- if eq .chezmoi.os "linux" -}}
 data:
   is_wsl: {{ $wsl }}
 
-  {{- if eq .chezmoi.os "linux" -}}
   uname_arch: "{{ output "uname" "-m" | trim }}"
-  {{- end -}}
+{{- end -}}

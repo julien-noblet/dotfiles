@@ -3,6 +3,7 @@ age:
   identity: "~/.config/chezmoi/key.txt"
   recipient: "age1l53u999rh3rlajznd422rf2mc05u8y5vk8wa34g94700putccp4q79vyzm"
 
+
 {{ $wsl := or (env "WSL_DISTRO_NAME") (env "IS_WSL") | not | not }}
 
 {{- if eq $wsl true -}}
@@ -25,4 +26,6 @@ pager: ""
 data:
   is_wsl: {{ $wsl }}
 
+  {{- if eq .chezmoi.os "linux" -}}
   uname_arch: "{{ output "uname" "-m" | trim }}"
+  {{- end -}}

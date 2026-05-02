@@ -123,7 +123,7 @@ asdf:
     - name: golangci-lint
       github: golangci/golangci-lint
       versions: 
-        - 2.11.4
+        - 2.12.1
       hosts:
         - victus
     - name: gofumpt

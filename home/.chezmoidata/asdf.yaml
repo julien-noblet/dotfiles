@@ -129,7 +129,7 @@ asdf:
     - name: gofumpt
       github: mvdan/gofumpt
       versions: 
-        - 0.9.2
+        - 0.10.0
       hosts:
         - victus
     - name: bun

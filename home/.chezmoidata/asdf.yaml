@@ -117,7 +117,7 @@ asdf:
     - name: argocd
       github: argoproj/argo-cd
       versions: 
-        - 3.3.9
+        - 3.4.1
       hosts:
         - victus
     - name: golangci-lint

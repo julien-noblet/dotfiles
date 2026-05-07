@@ -11,6 +11,12 @@ my_hosts:
       enabled: true
       role: agent
       cluster: homelab
+  ender3pro:
+    k3s:
+      enabled: true
+      role: agent
+      cluster: homelab
+    3d_printer: true
   K3Sfb2:
     k3s:
       enabled: true

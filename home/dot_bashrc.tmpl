@@ -1,3 +1,6 @@
+{{- /* This file is part of chezmoi, a dotfile manager, and is automatically generated. */ -}}
+{{- /* See https://chezmoi.io/ for more information. */ -}}
+{{- if eq .chezmoi.os "linux" -}}
 # shellcheck shell=bash
 # shellcheck disable=SC2312
 
@@ -123,7 +126,6 @@ fi
 
 alias cup='chezmoi update'
 
-
 # asdf upgrade function to update all plugins and install latest versions
 function asdf_upgrade() {
 	# Update asdf
@@ -168,7 +170,12 @@ if command -v starship; then
 	eval "$(starship init bash)"
 fi
 
+{{ if eq .chezmoi.hostname "victus" }} 
 # OpenClaw Completion
-source "/home/julien/.openclaw/completions/openclaw.bash"
+if [ -r "{{ joinPath .chezmoi.homeDir ".openclaw" "completions" "openclaw.bash" }}" ]; then
+	source "{{ joinPath .chezmoi.homeDir ".openclaw" "completions" "openclaw.bash" }}"
+fi
+{{ end }}
 
 #EOF
+{{- end -}}

@@ -1,7 +1,7 @@
 my_hosts:
   victus:
     laptop: true
-  k3spi:
+  K3SPi:
     k3s:
       enabled: true
       role: master

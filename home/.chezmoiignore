@@ -4,11 +4,10 @@
 # Ignorer les fichiers chiffrés tant que la clé age n'existe pas
 # Un second `chezmoi apply` installera automatiquement les fichiers chiffrés
 {{ if not (stat (joinPath .chezmoi.homeDir ".config/chezmoi/key.txt")) }}
+.config/k3s/homelab-agent-token
 .config/rclone/rclone.conf
 .gitconfig
 .kube/config
-.config/k3s/**
-.config/k3s
 .ssh/id_rsa
 printer_data/config/telegram.conf
 {{ end }}

@@ -7,8 +7,15 @@
 .config/rclone/rclone.conf
 .gitconfig
 .kube/config
+.config/k3s/**
+.config/k3s
 .ssh/id_rsa
 printer_data/config/telegram.conf
+{{ end }}
+
+{{ if not (and (hasKey .my_hosts .chezmoi.hostname) (hasKey (index .my_hosts .chezmoi.hostname) "k3s")) }}
+.config/k3s/**
+.config/k3s
 {{ end }}
 
 {{ if not (or (eq .chezmoi.hostname "ender3pro") .is_wsl) }}

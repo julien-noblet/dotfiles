@@ -1,0 +1,7 @@
+k3s:
+  install_script_url: https://get.k3s.io
+  current_version: v1.34.6+k3s1
+  clusters:
+    homelab:
+      server_url: https://192.168.1.151:6443
+      token_file_name: homelab-agent-token

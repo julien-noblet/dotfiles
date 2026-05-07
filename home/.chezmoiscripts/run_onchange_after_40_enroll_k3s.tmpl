@@ -1,0 +1,36 @@
+{{- $hostname := .chezmoi.hostname -}}
+{{- if hasKey .my_hosts $hostname -}}
+{{- $host := index .my_hosts $hostname -}}
+{{- if and (hasKey $host "k3s") ($host.k3s.enabled) -}}
+{{- $cluster := index .k3s.clusters $host.k3s.cluster -}}
+#!/bin/sh
+set -eu
+
+readonly install_script_url="{{ .k3s.install_script_url }}"
+readonly k3s_version="{{ .k3s.current_version }}"
+readonly k3s_role="{{ $host.k3s.role }}"
+readonly k3s_server_url="{{ $cluster.server_url }}"
+readonly k3s_token_file="{{ joinPath .chezmoi.homeDir ".config" "k3s" $cluster.token_file_name }}"
+
+if [ ! -r "$k3s_token_file" ]; then
+	echo "Missing K3S token file: $k3s_token_file" >&2
+	exit 1
+fi
+
+if [ -n "$k3s_server_url" ]; then
+	curl -sfL "$install_script_url" | \
+		INSTALL_K3S_VERSION="$k3s_version" \
+		INSTALL_K3S_EXEC="$k3s_role" \
+		K3S_URL="$k3s_server_url" \
+		K3S_TOKEN_FILE="$k3s_token_file" \
+		sh -s -
+else
+	curl -sfL "$install_script_url" | \
+		INSTALL_K3S_VERSION="$k3s_version" \
+		INSTALL_K3S_EXEC="$k3s_role" \
+		K3S_TOKEN_FILE="$k3s_token_file" \
+		sh -s -
+fi
+{{- end -}}
+{{- end -}}
+

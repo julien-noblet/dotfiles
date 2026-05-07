@@ -1,2 +1,13 @@
-victus:
-  - laptop: true
+my_hosts:
+  victus:
+    laptop: true
+  K3Sfb2:
+    k3s:
+      enabled: true
+      role: agent
+      cluster: homelab
+  K3Sfbx:
+    k3s:
+      enabled: true
+      role: agent
+      cluster: homelab

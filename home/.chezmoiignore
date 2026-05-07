@@ -12,6 +12,10 @@
 printer_data/config/telegram.conf
 {{ end }}
 
+{{ if not (and (hasKey .my_hosts .chezmoi.hostname) (hasKey (index .my_hosts .chezmoi.hostname) "k3s") (eq (index .my_hosts .chezmoi.hostname).k3s.role "agent")) }}
+.config/k3s/homelab-agent-token
+{{ end }}
+
 {{ if not (and (hasKey .my_hosts .chezmoi.hostname) (hasKey (index .my_hosts .chezmoi.hostname) "k3s")) }}
 .config/k3s/**
 .config/k3s

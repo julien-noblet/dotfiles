@@ -1,6 +1,16 @@
 my_hosts:
   victus:
     laptop: true
+  k3spi:
+    k3s:
+      enabled: true
+      role: master
+      cluster: homelab
+  aspire3:
+    k3s:
+      enabled: true
+      role: agent
+      cluster: homelab
   K3Sfb2:
     k3s:
       enabled: true

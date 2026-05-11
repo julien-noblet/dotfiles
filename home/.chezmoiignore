@@ -8,6 +8,7 @@
 .config/rclone/rclone.conf
 .gitconfig
 .kube/config
+.ssh/id_ed25519
 .ssh/id_rsa
 printer_data/config/telegram.conf
 {{ end }}

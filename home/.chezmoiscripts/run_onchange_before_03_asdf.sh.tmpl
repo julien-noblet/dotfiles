@@ -1,4 +1,6 @@
 {{- if eq .chezmoi.os "linux" -}}
+{{- if not (eq .chezmoi.osRelease.id "nixos") -}}
+
 #!{{ lookPath "bash" }}
 
 {{ $asdf_basepath := joinPath .chezmoi.homeDir ".asdf" -}}
@@ -72,5 +74,6 @@
 {{-   end -}}
 {{- end -}}
 
+{{- end -}}
 {{- end -}}
 {{- end -}}

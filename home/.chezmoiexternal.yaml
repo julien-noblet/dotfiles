@@ -66,6 +66,14 @@
     refreshPeriod: "24h"
     executable: true
 
+{{ end }}
+
+# NixOS
+{{ if or (eq .chezmoi.os "nixos") (eq .chezmoi.hostname "victus") -}}
+"flake"
+    type: git-repo
+    url: "git@github.com:julien-noblet/nix.git"
+    refreshPeriod: "2h"
 
 {{ end }}
 

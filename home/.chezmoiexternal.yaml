@@ -70,7 +70,7 @@
 
 # NixOS
 {{ if or (eq .chezmoi.os "nixos") (eq .chezmoi.hostname "victus") -}}
-"flake"
+"flake":
     type: git-repo
     url: "git@github.com:julien-noblet/nix.git"
     refreshPeriod: "2h"

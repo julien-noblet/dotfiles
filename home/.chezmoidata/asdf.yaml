@@ -153,7 +153,7 @@ asdf:
     - name: tree-sitter
       github: tree-sitter/tree-sitter
       versions: 
-        - 0.26.8
+        - 0.26.9
     - name: ansible 
       github: ansible/ansible
       plugin_url: https://github.com/kota65535/asdf-ansible.git

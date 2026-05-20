@@ -21,6 +21,11 @@ git:
 # https://github.com/twpayne/chezmoi/issues/3257
 pager: ""
 
+{{ if (or (eq .chezmoi.osRelease.id "nixos") (eq .chezmoi.osRelease.id "glfos")) -}}
+tempDir: "tmp"
+scriptTempDir: "tmp"
+
+{{ end }}
 
 {{/* Here we "export" the variables, so we can access them outside this file */ -}}
 {{- if eq .chezmoi.os "linux" -}}

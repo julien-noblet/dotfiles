@@ -8,7 +8,7 @@ my_hosts:
       cluster: homelab
   aspire3:
     k3s:
-      enabled: true
+      enabled: false
       role: agent
       cluster: homelab
   ender3pro:
@@ -19,11 +19,11 @@ my_hosts:
     3d_printer: true
   K3Sfb2:
     k3s:
-      enabled: true
+      enabled: false
       role: agent
       cluster: homelab
   K3Sfbx:
     k3s:
-      enabled: true
+      enabled: false
       role: agent
       cluster: homelab

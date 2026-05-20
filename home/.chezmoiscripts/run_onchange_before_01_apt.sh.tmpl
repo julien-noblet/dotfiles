@@ -1,7 +1,7 @@
 {{ if eq .chezmoi.os "linux" -}}
-#!/bin/bash
+{{- if (or (eq .chezmoi.osRelease.id "debian") (eq .chezmoi.osRelease.id "ubuntu") ) -}}
+#!{{ lookPath "bash" }}
 
-{{ if (or (eq .chezmoi.osRelease.id "debian") (eq .chezmoi.osRelease.id "ubuntu") ) -}}
 sudo apt update
 sudo apt upgrade -y
 
@@ -16,5 +16,4 @@ sudo apt install -y {{ range (index .packages.debian.hosts .chezmoi.hostname) }}
 sudo apt autoremove -y
 
 {{ end -}}
-
 {{ end -}}

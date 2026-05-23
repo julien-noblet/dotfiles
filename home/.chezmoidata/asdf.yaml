@@ -59,7 +59,7 @@ asdf:
     - name: rclone
       github: rclone/rclone
       versions: 
-        - 1.74.1
+        - 1.74.2
     - name: shellcheck
       github: koalaman/shellcheck
       versions: 

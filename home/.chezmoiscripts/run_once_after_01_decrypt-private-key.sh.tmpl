@@ -1,12 +1,18 @@
 {{- if eq .chezmoi.os "linux" -}}
 #!/bin/sh
 
-if [ ! -f "{{ .chezmoi.homeDir }}/.config/chezmoi/key.txt" ]; then
-	{{ if not (or (eq .chezmoi.osRelease.id "nixos") (eq .chezmoi.osRelease.id "glfos")) }}
-	chezmoi age decrypt --output "{{ .chezmoi.homeDir }}/.config/chezmoi/key.txt" --passphrase "{{ .chezmoi.homeDir }}/.config/chezmoi/key.txt.age"
-	chmod 600 "{{ .chezmoi.homeDir }}/.config/chezmoi/key.txt"
+keyPath="{{ .chezmoi.homeDir }}/.config/chezmoi/key.txt"
+keyPassphrasePath="{{ .chezmoi.homeDir }}/.config/chezmoi/key.txt.age"
+
+# Decrypt and set up the chezmoi age key only if it doesn't exist
+if [ ! -f "$keyPath" ]; then
+	{{ if not (has .chezmoi.osRelease.id .homeManagerManagedDistros) }}
+	# Use chezmoi's decrypt on non-HomeManager systems
+	chezmoi age decrypt --output "$keyPath" --passphrase "$keyPassphrasePath"
+	chmod 600 "$keyPath"
 	{{ else }}
-	nix run nixpkgs#age -- -d  "{{ .chezmoi.homeDir }}/.config/chezmoi/key.txt.age" >  "{{ .chezmoi.homeDir }}/.config/chezmoi/key.txt"
+	# Use nix age on HomeManager-managed systems (nixos, glfos, ...)
+	nix run nixpkgs#age -- -d "$keyPassphrasePath" > "$keyPath"
 	{{ end }}
 fi
 {{- end -}}

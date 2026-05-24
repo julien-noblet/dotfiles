@@ -1,0 +1,5 @@
+homeManagerManagedDistros:
+  - nixos
+  - glfos
+
+#isHomeManagerManaged: {{ has .chezmoi.osRelease.id .homeManagerManagedDistros }}

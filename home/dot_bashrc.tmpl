@@ -137,7 +137,6 @@ if ! shopt -oq posix; then
 fi
 
 
-{{ if not (or (eq .chezmoi.osRelease.id "nixos") (eq .chezmoi.osRelease.id "glfos")) -}}
 #ASDF
 export ASDF_DATA_DIR=$HOME/.asdf
 export PATH="$ASDF_DATA_DIR/shims:$ASDF_DATA_DIR/bin:$PATH"
@@ -166,7 +165,6 @@ function asdf_upgrade() {
 		fi
 	done
 }
-{{ end }}
 
 source <(chezmoi completion bash)
 

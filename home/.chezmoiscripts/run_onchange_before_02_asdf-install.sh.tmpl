@@ -1,5 +1,4 @@
 {{- if eq .chezmoi.os "linux" -}}
-{{- if not (or (eq .chezmoi.osRelease.id "nixos") (eq .chezmoi.osRelease.id "glfos")) -}}
 
 #!{{ lookPath "bash" }}
 
@@ -39,5 +38,4 @@ function install_asdf() {
 {{-   end -}}
 {{- end -}}
 
-{{- end -}}
 {{- end -}}

@@ -1,6 +1,8 @@
 # Ignorer la clé déchiffrée (créée par le script run_once_after)
 .config/chezmoi/key.txt
 
+
+{{ if eq .chezmoi.os "linux" }}
 # Ignorer les fichiers chiffrés tant que la clé age n'existe pas
 # Un second `chezmoi apply` installera automatiquement les fichiers chiffrés
 {{ if not (stat (joinPath .chezmoi.homeDir ".config/chezmoi/key.txt")) }}
@@ -12,6 +14,15 @@
 .ssh/id_ed25519
 .ssh/id_rsa
 printer_data/config/telegram.conf
+{{ end }}
+
+{{ if (has .chezmoi.osRelease.id .homeManagerManagedDistros) -}}
+# bashrc et ses scripts sont gérés par homemanager
+.bashrc
+.chezmoiscripts/02_asdf-install.sh
+.chezmoiscripts/03_asdf.sh
+.chezmoiscripts/20_dot_bashrc.sh
+
 {{ end }}
 
 {{ if not (and (hasKey .my_hosts .chezmoi.hostname) (hasKey (index .my_hosts .chezmoi.hostname) "k3s") (eq (index .my_hosts .chezmoi.hostname).k3s.role "agent")) }}
@@ -26,4 +37,5 @@ printer_data/config/telegram.conf
 {{ if not (or (eq .chezmoi.hostname "ender3pro") .is_wsl) }}
 printer_data/**
 printer_data
+{{ end }}
 {{ end }}

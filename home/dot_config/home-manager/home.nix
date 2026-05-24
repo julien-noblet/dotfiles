@@ -1,6 +1,10 @@
 { config, pkgs, lib, ... }:
 
 {
+  imports = [
+    ./ghostty.nix
+  ];
+
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "julien";
@@ -61,6 +65,8 @@
     lsd
     bat
     prettyping
+    calibre
+    rclone
 
     # DevOps
     kubectl
@@ -74,6 +80,7 @@
     goaccess
     k6
     clusterctl
+    kubernetes-helm
 
     # Network tools
     nmap
@@ -97,10 +104,13 @@
     # Development tools
     git-crypt
     pre-commit
+    #ollama-cuda
     #automake
     #autoconf
+    
 
     # Programming languages
+    jdk21
     #python3
     #python3Packages.pip
     #yarn
@@ -147,7 +157,7 @@
     #btop
 
     #Nix
-    colmena # peut être a basculer dans direnv ?
+    #colmena # peut être a basculer dans direnv ?
     
 
     # OpenStack client
@@ -171,18 +181,96 @@
 
   ];
   
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-             "google-chrome"
-             "vscode"
-           ];
+  nixpkgs.config = {
+    cudaCapabilities = [ "8.9" ];
+    cudaForwardCompat = false;
+    allowUnfreePredicate = pkg:
+      let
+        name = lib.getName pkg;
+        licenses = lib.toList (pkg.meta.license or [ ]);
+        isCudaEula = builtins.any (license: (license.shortName or "") == "CUDA EULA") licenses;
+      in
+      builtins.elem name [
+        "google-chrome"
+        "vscode"
+      ] || isCudaEula;
+  };
   
 
   # Direnv integration
   programs.direnv = {
     enable = true;
     enableZshIntegration = true;
+    enableBashIntegration = true;
     nix-direnv.enable = true;
   };
+
+  programs.zsh = {
+    enable = true;
+    shellAliases = {
+      ls = "lsd";
+    };
+  };
+
+  programs.bash = {
+    enable = true;
+    shellAliases = {
+      ls = "lsd";
+    };
+  };
+
+  services.ollama = {
+    enable = true;
+    package = pkgs.ollama-cuda;
+  };
+
+  systemd.user.services.ollama-model-loader = {
+    Unit = {
+      Description = "Download Ollama models";
+      After = [ "ollama.service" "network-online.target" ];
+      Wants = [ "ollama.service" "network-online.target" ];
+      PartOf = [ "ollama.service" ];
+    };
+    Service = {
+      Type = "oneshot";
+      ExecStart =
+        let
+          script = pkgs.writeShellScript "ollama-model-loader" ''
+            set -eu
+
+            api_base="http://127.0.0.1:11434"
+            export OLLAMA_HOST="127.0.0.1:11434"
+
+            for _ in $(seq 1 60); do
+              if ${lib.getExe pkgs.curl} -fsS "$api_base/api/tags" >/dev/null; then
+                break
+              fi
+              sleep 2
+            done
+
+            ${lib.getExe pkgs.ollama-cuda} pull gemma4:e4b
+            ${lib.getExe pkgs.ollama-cuda} pull qwen3.5:4b
+          '';
+        in
+        "${script}";
+    };
+  };
+
+  systemd.user.timers.ollama-model-loader = {
+    Unit = {
+      Description = "Schedule Ollama model downloads";
+    };
+    Timer = {
+      OnBootSec = "30s";
+      OnUnitActiveSec = "12h";
+      Persistent = true;
+      Unit = "ollama-model-loader.service";
+    };
+    Install = {
+      WantedBy = [ "timers.target" ];
+    };
+  };
+
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
@@ -217,6 +305,9 @@
   home.sessionVariables = {
     # EDITOR = "emacs";
   };
+
+  
+
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

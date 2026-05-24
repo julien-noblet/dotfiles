@@ -94,8 +94,6 @@ fi
 
 # asdf
 export PATH="$HOME/bin:$PATH"
-export ASDF_DATA_DIR=$HOME/.asdf
-export PATH="$ASDF_DATA_DIR/shims:$ASDF_DATA_DIR/bin:$PATH"
 
 
 # enable color support of ls and also add handy aliases
@@ -126,6 +124,25 @@ fi
 
 alias cup='chezmoi update'
 
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+	if [ -f /usr/share/bash-completion/bash_completion ]; then
+		. /usr/share/bash-completion/bash_completion
+	elif [ -f /etc/bash_completion ]; then
+		. /etc/bash_completion
+	fi
+fi
+
+
+{{ if not (or (eq .chezmoi.osRelease.id "nixos") (eq .chezmoi.osRelease.id "glfos")) -}}
+#ASDF
+export ASDF_DATA_DIR=$HOME/.asdf
+export PATH="$ASDF_DATA_DIR/shims:$ASDF_DATA_DIR/bin:$PATH"
+
+
 # asdf upgrade function to update all plugins and install latest versions
 function asdf_upgrade() {
 	# Update asdf
@@ -149,19 +166,7 @@ function asdf_upgrade() {
 		fi
 	done
 }
-
-
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if ! shopt -oq posix; then
-	if [ -f /usr/share/bash-completion/bash_completion ]; then
-		. /usr/share/bash-completion/bash_completion
-	elif [ -f /etc/bash_completion ]; then
-		. /etc/bash_completion
-	fi
-fi
-source <(asdf completion bash)
+{{ end }}
 
 source <(chezmoi completion bash)
 
@@ -169,6 +174,8 @@ source <(chezmoi completion bash)
 if command -v starship; then
 	eval "$(starship init bash)"
 fi
+
+source <(asdf completion bash)
 
 {{ if eq .chezmoi.hostname "victus" }} 
 # OpenClaw Completion

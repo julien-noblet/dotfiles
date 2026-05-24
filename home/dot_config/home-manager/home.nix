@@ -66,7 +66,6 @@
     lsd
     bat
     prettyping
-    calibre
     rclone
 
     # DevOps
@@ -145,6 +144,8 @@
     # Multimedia
     vlc
     #deezer-enhanced
+    calibre
+
 
     # Terminal emulator
     #kitty

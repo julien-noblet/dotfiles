@@ -32,7 +32,7 @@ asdf:
     - name: hugo
       github: gohugoio/hugo
       versions: 
-        - 0.162.0
+        - 0.165.0
       hosts:
         - victus
     - name: lazygit

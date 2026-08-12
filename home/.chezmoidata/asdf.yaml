@@ -38,7 +38,7 @@ asdf:
     - name: lazygit
       github: jesseduffield/lazygit
       versions: 
-        - 0.62.0
+        - 0.64.1
       hosts:
         - victus
     - name: lsd

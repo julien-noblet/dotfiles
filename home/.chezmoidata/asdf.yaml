@@ -93,7 +93,7 @@ asdf:
     - name: helm
       github: helm/helm
       versions: 
-        - 4.2.0
+        - 4.2.4
       hosts:
         - victus
     - name: terraform

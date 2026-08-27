@@ -53,7 +53,7 @@ asdf:
     - name: nodejs
       github: nodejs/node
       versions: 
-        - 26.7.0
+        - 26.8.1
       hosts:
         - victus
     - name: rclone

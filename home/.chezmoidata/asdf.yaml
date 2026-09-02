@@ -99,7 +99,7 @@ asdf:
     - name: terraform
       github: hashicorp/terraform
       versions: 
-        - 1.16.0
+        - 1.16.1
       hosts:
         - victus
     - name: k9s

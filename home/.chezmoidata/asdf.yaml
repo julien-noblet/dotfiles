@@ -8,7 +8,7 @@ asdf:
     - name: rust
       github: rust-lang/rust
       versions: 
-        - 1.98.0
+        - 1.98.1
     - name: bat
       github: sharkdp/bat
       versions: 

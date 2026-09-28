@@ -16,7 +16,7 @@ asdf:
     - name: chezmoi
       github: twpayne/chezmoi
       versions: 
-        - 2.72.2
+        - 2.73.0
     - name: github-cli
       github: cli/cli
       versions: 

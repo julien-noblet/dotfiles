@@ -141,7 +141,7 @@ asdf:
     - name: trivy
       github: aquasecurity/trivy
       versions: 
-        - 0.74.0
+        - 0.75.0
       hosts:
         - victus
     - name: popeye

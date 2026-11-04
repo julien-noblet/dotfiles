@@ -20,7 +20,7 @@ asdf:
     - name: github-cli
       github: cli/cli
       versions: 
-        - 2.102.0
+        - 2.103.3
       hosts:
         - victus
     - name: golang

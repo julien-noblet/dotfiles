@@ -75,7 +75,7 @@ asdf:
     - name: upx
       github: upx/upx
       versions: 
-        - 5.2.1
+        - 5.3.0
       hosts:
         - victus
     - name: yq

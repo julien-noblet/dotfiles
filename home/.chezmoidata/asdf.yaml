@@ -81,7 +81,7 @@ asdf:
     - name: yq
       github: mikefarah/yq
       versions: 
-        - 4.54.2
+        - 4.54.3
     - name: gum
       github: charmbracelet/gum
       versions: 
